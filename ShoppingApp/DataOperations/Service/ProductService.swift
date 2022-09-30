@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import NetworkLayer
+
 class ProductService: APIServiceProvider<Request> {
     init(request: Request) {
         super.init(method: .get,

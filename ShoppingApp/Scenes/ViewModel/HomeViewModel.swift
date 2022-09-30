@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NetworkLayer
 
 protocol HomeViewModelProtocol {
     var coordinator: HomeViewCoordinatorProtocol? { get }
@@ -16,7 +17,7 @@ class HomeViewModel: HomeViewModelProtocol {
     var coordinator: HomeViewCoordinatorProtocol?
     func getData() {
         do {
-            guard let urlRequest = try? ProductService(request: Request()).returnURLRequest(headerType: .contentType) else { return }
+            guard let urlRequest = try? ProductService(request: Request()).returnURLRequest() else { return }
             apiCall(with: urlRequest, completion: dataListener)
         }
     }

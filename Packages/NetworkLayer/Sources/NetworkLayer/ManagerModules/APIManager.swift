@@ -8,14 +8,14 @@
 import Foundation
 import Network
 
-protocol APIManagerProtocol {
+public protocol APIManagerProtocol {
     func executeRequest<R: Codable>(urlRequest: URLRequest, completion: @escaping (Result<R, Error>) -> Void)
 }
 
-class APIManager: APIManagerProtocol {
+public class APIManager: APIManagerProtocol {
 
     // MARK: - Singleton
-    static let shared = APIManager()
+    public static let shared = APIManager()
 
     // MARK: - JSON Decoder
     private let jsonDecoder = JSONDecoder()
@@ -31,7 +31,7 @@ class APIManager: APIManagerProtocol {
         self.session = URLSession(configuration: config)
     }
 
-    func executeRequest<R>(urlRequest: URLRequest, completion: @escaping (Result<R, Error>) -> Void) where R: Codable {
+    public func executeRequest<R>(urlRequest: URLRequest, completion: @escaping (Result<R, Error>) -> Void) where R: Codable {
         session.dataTask(with: urlRequest) { [weak self] data, response, error in
             self?.dataTaskHandler(data, response, error, completion)
         }.resume()

@@ -9,27 +9,27 @@ import Foundation
 
 public typealias Parameters = [String: Any]
 
-protocol URLRequestProtocol {
-    func returnURLRequest(headerType: HTTPHeaderFields) throws -> URLRequest
+public protocol URLRequestProtocol {
+    func returnURLRequest() throws -> URLRequest
 }
 
-class APIServiceProvider<T: Codable>: URLRequestProtocol {
+open class APIServiceProvider<T: Codable>: URLRequestProtocol {
     private var method: HTTPMethod
     private var baseURL: String
     private var path: String?
     private var data: T?
 
-    internal init(method: HTTPMethod,
-                  baseURL: String,
-                  path: String? = nil,
-                  data: T? = nil) {
+    public init(method: HTTPMethod,
+                baseURL: String,
+                path: String? = nil,
+                data: T? = nil) {
         self.method = method
         self.baseURL = baseURL
         self.path = path
         self.data = data
     }
 
-    func returnURLRequest(headerType: HTTPHeaderFields) throws -> URLRequest {
+    public func returnURLRequest() throws -> URLRequest {
         var url = try baseURL.url()
 
         if let path = path {

@@ -21,6 +21,7 @@
 		F0971C2128E70B2400E2A5DC /* ProductResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C2028E70B2400E2A5DC /* ProductResponse.swift */; };
 		F0971C2428E70B8F00E2A5DC /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C2328E70B8F00E2A5DC /* RequestModel.swift */; };
 		F0971C2728E70BAC00E2A5DC /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C2628E70BAC00E2A5DC /* ProductService.swift */; };
+		F0971C4A28E7183A00E2A5DC /* NetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = F0971C4928E7183A00E2A5DC /* NetworkLayer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0971C4A28E7183A00E2A5DC /* NetworkLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +259,7 @@
 			);
 			name = ShoppingApp;
 			packageProductDependencies = (
+				F0971C4928E7183A00E2A5DC /* NetworkLayer */,
 			);
 			productName = ShoppingApp;
 			productReference = 6E1341B0280605060092B126 /* ShoppingApp.app */;
@@ -557,6 +560,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -583,6 +587,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -708,6 +713,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F0971C4928E7183A00E2A5DC /* NetworkLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkLayer;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6E1341A8280605060092B126 /* Project object */;
 }
