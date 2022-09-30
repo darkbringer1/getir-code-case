@@ -52,8 +52,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func startMainView() {
-        let mainView = ViewController()
-        window?.rootViewController = mainView
+        let homeCoordinator = HomeViewCoordinator()
+        homeCoordinator.start()
+
+        window?.rootViewController = homeCoordinator.rootViewController
         window?.makeKeyAndVisible()
     }
 
