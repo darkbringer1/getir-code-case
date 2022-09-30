@@ -18,16 +18,6 @@
 		F0971BF528E6EB3400E2A5DC /* HomeViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF428E6EB3400E2A5DC /* HomeViewCoordinator.swift */; };
 		F0971BF728E6EB3B00E2A5DC /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF628E6EB3B00E2A5DC /* HomeViewModel.swift */; };
 		F0971BFA28E6EC6A00E2A5DC /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF928E6EC6A00E2A5DC /* Coordinator.swift */; };
-		F0971C0128E6F33D00E2A5DC /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C0028E6F33D00E2A5DC /* APIManager.swift */; };
-		F0971C0728E6F82400E2A5DC /* APIServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C0628E6F82400E2A5DC /* APIServiceProvider.swift */; };
-		F0971C0B28E6F85D00E2A5DC /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C0A28E6F85D00E2A5DC /* HTTPMethod.swift */; };
-		F0971C0D28E6F91A00E2A5DC /* HTTPHeaderFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C0C28E6F91A00E2A5DC /* HTTPHeaderFields.swift */; };
-		F0971C1028E6F98B00E2A5DC /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C0F28E6F98B00E2A5DC /* String+Extension.swift */; };
-		F0971C1328E6FA6800E2A5DC /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C1228E6FA6800E2A5DC /* NetworkError.swift */; };
-		F0971C1528E6FB6900E2A5DC /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C1428E6FB6900E2A5DC /* ParameterEncoding.swift */; };
-		F0971C1828E6FBEF00E2A5DC /* Encoding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C1728E6FBEF00E2A5DC /* Encoding+Extension.swift */; };
-		F0971C1A28E6FCC300E2A5DC /* URLParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C1928E6FCC300E2A5DC /* URLParameterEncoder.swift */; };
-		F0971C1D28E6FDAE00E2A5DC /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C1C28E6FDAE00E2A5DC /* JSONParameterEncoder.swift */; };
 		F0971C2128E70B2400E2A5DC /* ProductResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C2028E70B2400E2A5DC /* ProductResponse.swift */; };
 		F0971C2428E70B8F00E2A5DC /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C2328E70B8F00E2A5DC /* RequestModel.swift */; };
 		F0971C2728E70BAC00E2A5DC /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C2628E70BAC00E2A5DC /* ProductService.swift */; };
@@ -66,19 +56,10 @@
 		F0971BF428E6EB3400E2A5DC /* HomeViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCoordinator.swift; sourceTree = "<group>"; };
 		F0971BF628E6EB3B00E2A5DC /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		F0971BF928E6EC6A00E2A5DC /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		F0971C0028E6F33D00E2A5DC /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		F0971C0628E6F82400E2A5DC /* APIServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIServiceProvider.swift; sourceTree = "<group>"; };
-		F0971C0A28E6F85D00E2A5DC /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
-		F0971C0C28E6F91A00E2A5DC /* HTTPHeaderFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaderFields.swift; sourceTree = "<group>"; };
-		F0971C0F28E6F98B00E2A5DC /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		F0971C1228E6FA6800E2A5DC /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		F0971C1428E6FB6900E2A5DC /* ParameterEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
-		F0971C1728E6FBEF00E2A5DC /* Encoding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encoding+Extension.swift"; sourceTree = "<group>"; };
-		F0971C1928E6FCC300E2A5DC /* URLParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParameterEncoder.swift; sourceTree = "<group>"; };
-		F0971C1C28E6FDAE00E2A5DC /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
 		F0971C2028E70B2400E2A5DC /* ProductResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResponse.swift; sourceTree = "<group>"; };
 		F0971C2328E70B8F00E2A5DC /* RequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
 		F0971C2628E70BAC00E2A5DC /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
+		F0971C4828E7174800E2A5DC /* NetworkLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NetworkLayer; path = Packages/NetworkLayer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,10 +90,12 @@
 		6E1341A7280605060092B126 = {
 			isa = PBXGroup;
 			children = (
+				F0971C4328E716C300E2A5DC /* Packages */,
 				6E1341B2280605060092B126 /* ShoppingApp */,
 				6E1341C9280605070092B126 /* ShoppingAppTests */,
 				6E1341D3280605070092B126 /* ShoppingAppUITests */,
 				6E1341B1280605060092B126 /* Products */,
+				F0971C4528E716CF00E2A5DC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -214,58 +197,8 @@
 				F0971C2528E70B9900E2A5DC /* Service */,
 				F0971C2228E70B8200E2A5DC /* RequestModel */,
 				F0971C1F28E70A0A00E2A5DC /* ResponseModel */,
-				F0971C1E28E6FF8200E2A5DC /* NetworkLayer */,
 			);
 			path = DataOperations;
-			sourceTree = "<group>";
-		};
-		F0971C0828E6F83400E2A5DC /* ManagerModules */ = {
-			isa = PBXGroup;
-			children = (
-				F0971C0028E6F33D00E2A5DC /* APIManager.swift */,
-				F0971C0628E6F82400E2A5DC /* APIServiceProvider.swift */,
-			);
-			path = ManagerModules;
-			sourceTree = "<group>";
-		};
-		F0971C0928E6F84200E2A5DC /* HTTPModules */ = {
-			isa = PBXGroup;
-			children = (
-				F0971C0A28E6F85D00E2A5DC /* HTTPMethod.swift */,
-				F0971C0C28E6F91A00E2A5DC /* HTTPHeaderFields.swift */,
-			);
-			path = HTTPModules;
-			sourceTree = "<group>";
-		};
-		F0971C0E28E6F97C00E2A5DC /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				F0971C0F28E6F98B00E2A5DC /* String+Extension.swift */,
-				F0971C1728E6FBEF00E2A5DC /* Encoding+Extension.swift */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
-		F0971C1128E6FA5300E2A5DC /* EncodingModules */ = {
-			isa = PBXGroup;
-			children = (
-				F0971C1228E6FA6800E2A5DC /* NetworkError.swift */,
-				F0971C1428E6FB6900E2A5DC /* ParameterEncoding.swift */,
-				F0971C1928E6FCC300E2A5DC /* URLParameterEncoder.swift */,
-				F0971C1C28E6FDAE00E2A5DC /* JSONParameterEncoder.swift */,
-			);
-			path = EncodingModules;
-			sourceTree = "<group>";
-		};
-		F0971C1E28E6FF8200E2A5DC /* NetworkLayer */ = {
-			isa = PBXGroup;
-			children = (
-				F0971C1128E6FA5300E2A5DC /* EncodingModules */,
-				F0971C0928E6F84200E2A5DC /* HTTPModules */,
-				F0971C0828E6F83400E2A5DC /* ManagerModules */,
-				F0971C0E28E6F97C00E2A5DC /* Utilities */,
-			);
-			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
 		F0971C1F28E70A0A00E2A5DC /* ResponseModel */ = {
@@ -292,6 +225,21 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		F0971C4328E716C300E2A5DC /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				F0971C4828E7174800E2A5DC /* NetworkLayer */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		F0971C4528E716CF00E2A5DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -308,6 +256,8 @@
 			dependencies = (
 			);
 			name = ShoppingApp;
+			packageProductDependencies = (
+			);
 			productName = ShoppingApp;
 			productReference = 6E1341B0280605060092B126 /* ShoppingApp.app */;
 			productType = "com.apple.product-type.application";
@@ -422,25 +372,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0971C1D28E6FDAE00E2A5DC /* JSONParameterEncoder.swift in Sources */,
-				F0971C1528E6FB6900E2A5DC /* ParameterEncoding.swift in Sources */,
 				F0971BF528E6EB3400E2A5DC /* HomeViewCoordinator.swift in Sources */,
 				F0971BF728E6EB3B00E2A5DC /* HomeViewModel.swift in Sources */,
 				F0971C2728E70BAC00E2A5DC /* ProductService.swift in Sources */,
 				6E1341B4280605060092B126 /* AppDelegate.swift in Sources */,
 				F0971C2428E70B8F00E2A5DC /* RequestModel.swift in Sources */,
-				F0971C1028E6F98B00E2A5DC /* String+Extension.swift in Sources */,
 				6E1341B6280605060092B126 /* SceneDelegate.swift in Sources */,
 				F0971BF328E6EAF500E2A5DC /* HomeViewController.swift in Sources */,
-				F0971C0728E6F82400E2A5DC /* APIServiceProvider.swift in Sources */,
-				F0971C1A28E6FCC300E2A5DC /* URLParameterEncoder.swift in Sources */,
-				F0971C1828E6FBEF00E2A5DC /* Encoding+Extension.swift in Sources */,
 				F0971C2128E70B2400E2A5DC /* ProductResponse.swift in Sources */,
 				F0971BFA28E6EC6A00E2A5DC /* Coordinator.swift in Sources */,
-				F0971C0B28E6F85D00E2A5DC /* HTTPMethod.swift in Sources */,
-				F0971C1328E6FA6800E2A5DC /* NetworkError.swift in Sources */,
-				F0971C0128E6F33D00E2A5DC /* APIManager.swift in Sources */,
-				F0971C0D28E6F91A00E2A5DC /* HTTPHeaderFields.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
