@@ -22,19 +22,17 @@ class CustomImageViewComponent: UIImageView {
             case .memory:
                 self?.imageLoadingProcess(componentData: componentData)
             case .disk:
-                self?.loadImageFromDiskWith(componentData: componentData)
+                self?.loadImageFromDiskWith(componentData: componentData) {}
             }
         }
     }
 
     //MARK: - GETTING THE IMAGE FROM THE CACHE OR INTERNET
-
     private func imageLoadingProcess(componentData: CustomImageViewData) {
         imageUrlString = componentData.imageUrl
 
         //empty the view which the image was inside- prevent override or visual bugs
         image = nil
-
 
         //if its cached, set image to image else next step --->>
         if let cachedImage = returnImageFromCache(imageUrl: componentData.imageUrl) {
@@ -43,15 +41,19 @@ class CustomImageViewComponent: UIImageView {
         }
         //if its not cached, download from internet with private method.
         guard let url = URL(string: componentData.imageUrl) else { return }
-        fireImageDownloadingRequest(url, componentData)
+        fireImageDownloadingRequest(url, componentData) { [weak self] in
+            DispatchQueue.main.async {
+                self?.image = UIImage(systemName: "icloud.slash")
+            }
+        }
     }
 
     //MARK: - DOWNLOAD THE IMAGE
-
     //try to download the image with URLSession task
-    private func fireImageDownloadingRequest(_ url: URL, _ componentData: CustomImageViewData) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
+    private func fireImageDownloadingRequest(_ url: URL, _ componentData: CustomImageViewData, error completion: @escaping () -> Void) {
+        URLSession.shared.dataTask(with: url) { data, _, error in
             if error != nil {
+                completion()
                 print("Error in image download request: \(String(describing: error))")
                 return
             }
@@ -88,7 +90,12 @@ class CustomImageViewComponent: UIImageView {
             }
         }
         //need to set image to cache if it exist inside the component data
-        setImageToCache(key: componentData.imageUrl, object: image)
+        switch componentData.loadingType {
+        case .memory:
+            setImageToCache(key: componentData.imageUrl, object: image)
+        case .disk:
+            saveImage(imageName: componentData.imageId!, image: image)
+        }
     }
 
     //MARK: - SETTING IMAGE TO CACHE
@@ -129,7 +136,7 @@ class CustomImageViewComponent: UIImageView {
 
     }
 
-    private func loadImageFromDiskWith(componentData: CustomImageViewData) {
+    private func loadImageFromDiskWith(componentData: CustomImageViewData, onErrorCompletion: @escaping () -> Void) {
         imageUrlString = componentData.imageUrl
 
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
@@ -143,11 +150,11 @@ class CustomImageViewComponent: UIImageView {
                 self.image = image
             } else {
                 guard let url = URL(string: componentData.imageUrl) else { return }
-                fireImageDownloadingRequest(url, componentData)
+                fireImageDownloadingRequest(url, componentData, error: onErrorCompletion)
             }
         } else {
             guard let url = URL(string: componentData.imageUrl) else { return }
-            fireImageDownloadingRequest(url, componentData)
+            fireImageDownloadingRequest(url, componentData, error: onErrorCompletion)
         }
     }
 }

@@ -28,7 +28,7 @@ class GenericBaseView<T>: UIView {
         setupViews()
     }
 
-    func setData(data: T?) {
+    func set(data: T?) {
         self.data = data
         loadDataView()
     }
