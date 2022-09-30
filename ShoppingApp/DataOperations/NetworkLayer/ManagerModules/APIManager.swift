@@ -8,6 +8,10 @@
 import Foundation
 import Network
 
+protocol APIManagerProtocol {
+    func executeRequest<R: Codable>(urlRequest: URLRequest, completion: @escaping (Result<R, Error>) -> Void)
+}
+
 class APIManager: APIManagerProtocol {
 
     // MARK: - Singleton
