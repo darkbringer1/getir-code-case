@@ -5,10 +5,10 @@
 //  Created by Dogukaan Kılıçarslan on 30.09.2022.
 //
 
-import Foundation
 import UIKit
 
 class HomeViewController: UIViewController {
+    
     var viewModel: HomeViewModelProtocol!
 
     convenience init(viewModel: HomeViewModelProtocol) {
@@ -19,5 +19,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
+        viewModel.getData()
     }
 }
