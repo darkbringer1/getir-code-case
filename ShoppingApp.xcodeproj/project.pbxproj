@@ -18,6 +18,8 @@
 		F0971BF528E6EB3400E2A5DC /* HomeViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF428E6EB3400E2A5DC /* HomeViewCoordinator.swift */; };
 		F0971BF728E6EB3B00E2A5DC /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF628E6EB3B00E2A5DC /* HomeViewModel.swift */; };
 		F0971BFA28E6EC6A00E2A5DC /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF928E6EC6A00E2A5DC /* Coordinator.swift */; };
+		F0971C0128E6F33D00E2A5DC /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C0028E6F33D00E2A5DC /* APIManager.swift */; };
+		F0971C0328E6F6A000E2A5DC /* APIManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C0228E6F6A000E2A5DC /* APIManagerProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		F0971BF428E6EB3400E2A5DC /* HomeViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCoordinator.swift; sourceTree = "<group>"; };
 		F0971BF628E6EB3B00E2A5DC /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		F0971BF928E6EC6A00E2A5DC /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		F0971C0028E6F33D00E2A5DC /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		F0971C0228E6F6A000E2A5DC /* APIManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManagerProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,7 @@
 		6E1341B2280605060092B126 /* ShoppingApp */ = {
 			isa = PBXGroup;
 			children = (
+				F0971BFF28E6F2DA00E2A5DC /* DataOperations */,
 				F0971BF828E6EC5D00E2A5DC /* Coordinator */,
 				F0971BF128E6EAE200E2A5DC /* Scenes */,
 				F0971BFE28E6EEBA00E2A5DC /* App */,
@@ -179,6 +184,15 @@
 				6E1341B5280605060092B126 /* SceneDelegate.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		F0971BFF28E6F2DA00E2A5DC /* DataOperations */ = {
+			isa = PBXGroup;
+			children = (
+				F0971C0028E6F33D00E2A5DC /* APIManager.swift */,
+				F0971C0228E6F6A000E2A5DC /* APIManagerProtocol.swift */,
+			);
+			path = DataOperations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,10 +327,12 @@
 			files = (
 				F0971BF528E6EB3400E2A5DC /* HomeViewCoordinator.swift in Sources */,
 				F0971BF728E6EB3B00E2A5DC /* HomeViewModel.swift in Sources */,
+				F0971C0328E6F6A000E2A5DC /* APIManagerProtocol.swift in Sources */,
 				6E1341B4280605060092B126 /* AppDelegate.swift in Sources */,
 				6E1341B6280605060092B126 /* SceneDelegate.swift in Sources */,
 				F0971BF328E6EAF500E2A5DC /* HomeViewController.swift in Sources */,
 				F0971BFA28E6EC6A00E2A5DC /* Coordinator.swift in Sources */,
+				F0971C0128E6F33D00E2A5DC /* APIManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
