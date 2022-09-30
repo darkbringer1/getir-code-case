@@ -18,6 +18,10 @@
 		F0971BF528E6EB3400E2A5DC /* HomeViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF428E6EB3400E2A5DC /* HomeViewCoordinator.swift */; };
 		F0971BF728E6EB3B00E2A5DC /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF628E6EB3B00E2A5DC /* HomeViewModel.swift */; };
 		F0971BFA28E6EC6A00E2A5DC /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF928E6EC6A00E2A5DC /* Coordinator.swift */; };
+		F0971C2128E70B2400E2A5DC /* ProductResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C2028E70B2400E2A5DC /* ProductResponse.swift */; };
+		F0971C2428E70B8F00E2A5DC /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C2328E70B8F00E2A5DC /* RequestModel.swift */; };
+		F0971C2728E70BAC00E2A5DC /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C2628E70BAC00E2A5DC /* ProductService.swift */; };
+		F0971C4A28E7183A00E2A5DC /* NetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = F0971C4928E7183A00E2A5DC /* NetworkLayer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,10 @@
 		F0971BF428E6EB3400E2A5DC /* HomeViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCoordinator.swift; sourceTree = "<group>"; };
 		F0971BF628E6EB3B00E2A5DC /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		F0971BF928E6EC6A00E2A5DC /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		F0971C2028E70B2400E2A5DC /* ProductResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResponse.swift; sourceTree = "<group>"; };
+		F0971C2328E70B8F00E2A5DC /* RequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
+		F0971C2628E70BAC00E2A5DC /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
+		F0971C4828E7174800E2A5DC /* NetworkLayer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NetworkLayer; path = Packages/NetworkLayer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0971C4A28E7183A00E2A5DC /* NetworkLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,10 +92,12 @@
 		6E1341A7280605060092B126 = {
 			isa = PBXGroup;
 			children = (
+				F0971C4328E716C300E2A5DC /* Packages */,
 				6E1341B2280605060092B126 /* ShoppingApp */,
 				6E1341C9280605070092B126 /* ShoppingAppTests */,
 				6E1341D3280605070092B126 /* ShoppingAppUITests */,
 				6E1341B1280605060092B126 /* Products */,
+				F0971C4528E716CF00E2A5DC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +114,7 @@
 		6E1341B2280605060092B126 /* ShoppingApp */ = {
 			isa = PBXGroup;
 			children = (
+				F0971BFF28E6F2DA00E2A5DC /* DataOperations */,
 				F0971BF828E6EC5D00E2A5DC /* Coordinator */,
 				F0971BF128E6EAE200E2A5DC /* Scenes */,
 				F0971BFE28E6EEBA00E2A5DC /* App */,
@@ -181,6 +193,55 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		F0971BFF28E6F2DA00E2A5DC /* DataOperations */ = {
+			isa = PBXGroup;
+			children = (
+				F0971C2528E70B9900E2A5DC /* Service */,
+				F0971C2228E70B8200E2A5DC /* RequestModel */,
+				F0971C1F28E70A0A00E2A5DC /* ResponseModel */,
+			);
+			path = DataOperations;
+			sourceTree = "<group>";
+		};
+		F0971C1F28E70A0A00E2A5DC /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				F0971C2028E70B2400E2A5DC /* ProductResponse.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		F0971C2228E70B8200E2A5DC /* RequestModel */ = {
+			isa = PBXGroup;
+			children = (
+				F0971C2328E70B8F00E2A5DC /* RequestModel.swift */,
+			);
+			path = RequestModel;
+			sourceTree = "<group>";
+		};
+		F0971C2528E70B9900E2A5DC /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				F0971C2628E70BAC00E2A5DC /* ProductService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		F0971C4328E716C300E2A5DC /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				F0971C4828E7174800E2A5DC /* NetworkLayer */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		F0971C4528E716CF00E2A5DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -197,6 +258,9 @@
 			dependencies = (
 			);
 			name = ShoppingApp;
+			packageProductDependencies = (
+				F0971C4928E7183A00E2A5DC /* NetworkLayer */,
+			);
 			productName = ShoppingApp;
 			productReference = 6E1341B0280605060092B126 /* ShoppingApp.app */;
 			productType = "com.apple.product-type.application";
@@ -313,9 +377,12 @@
 			files = (
 				F0971BF528E6EB3400E2A5DC /* HomeViewCoordinator.swift in Sources */,
 				F0971BF728E6EB3B00E2A5DC /* HomeViewModel.swift in Sources */,
+				F0971C2728E70BAC00E2A5DC /* ProductService.swift in Sources */,
 				6E1341B4280605060092B126 /* AppDelegate.swift in Sources */,
+				F0971C2428E70B8F00E2A5DC /* RequestModel.swift in Sources */,
 				6E1341B6280605060092B126 /* SceneDelegate.swift in Sources */,
 				F0971BF328E6EAF500E2A5DC /* HomeViewController.swift in Sources */,
+				F0971C2128E70B2400E2A5DC /* ProductResponse.swift in Sources */,
 				F0971BFA28E6EC6A00E2A5DC /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -493,6 +560,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -519,6 +587,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -644,6 +713,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F0971C4928E7183A00E2A5DC /* NetworkLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkLayer;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6E1341A8280605060092B126 /* Project object */;
 }
