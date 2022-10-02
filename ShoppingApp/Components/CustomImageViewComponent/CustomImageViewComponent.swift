@@ -22,7 +22,7 @@ class CustomImageViewComponent: UIImageView {
             case .memory:
                 self?.imageLoadingProcess(componentData: componentData)
             case .disk:
-                self?.loadImageFromDiskWith(componentData: componentData) {}
+                self?.loadImageFromDiskWith(componentData: componentData)
             }
         }
     }
@@ -136,7 +136,7 @@ class CustomImageViewComponent: UIImageView {
 
     }
 
-    private func loadImageFromDiskWith(componentData: CustomImageViewData, onErrorCompletion: @escaping () -> Void) {
+    private func loadImageFromDiskWith(componentData: CustomImageViewData) {
         imageUrlString = componentData.imageUrl
 
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
@@ -150,11 +150,19 @@ class CustomImageViewComponent: UIImageView {
                 self.image = image
             } else {
                 guard let url = URL(string: componentData.imageUrl) else { return }
-                fireImageDownloadingRequest(url, componentData, error: onErrorCompletion)
+                fireImageDownloadingRequest(url, componentData) {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.image = UIImage(systemName: "icloud.slash")
+                    }
+                }
             }
         } else {
             guard let url = URL(string: componentData.imageUrl) else { return }
-            fireImageDownloadingRequest(url, componentData, error: onErrorCompletion)
+            fireImageDownloadingRequest(url, componentData) {
+                DispatchQueue.main.async { [weak self] in
+                    self?.image = UIImage(systemName: "icloud.slash")
+                }
+            }
         }
     }
 }

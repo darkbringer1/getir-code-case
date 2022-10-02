@@ -38,6 +38,8 @@
 		F0971C7328E72DA000E2A5DC /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C7228E72DA000E2A5DC /* BaseCollectionViewCell.swift */; };
 		F0971C7628E7385700E2A5DC /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C7528E7385700E2A5DC /* Double+Extension.swift */; };
 		F0971C7928E73AA200E2A5DC /* HomeDataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C7828E73AA200E2A5DC /* HomeDataFormatter.swift */; };
+		F0971C7C28E9D3F200E2A5DC /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C7B28E9D3F200E2A5DC /* CoreDataManager.swift */; };
+		F0971C7F28E9DBAF00E2A5DC /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C7E28E9DBAF00E2A5DC /* Array+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,8 @@
 		F0971C7228E72DA000E2A5DC /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		F0971C7528E7385700E2A5DC /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		F0971C7828E73AA200E2A5DC /* HomeDataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataFormatter.swift; sourceTree = "<group>"; };
+		F0971C7B28E9D3F200E2A5DC /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		F0971C7E28E9DBAF00E2A5DC /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +150,7 @@
 		6E1341B2280605060092B126 /* ShoppingApp */ = {
 			isa = PBXGroup;
 			children = (
+				F0971C7A28E9D3E800E2A5DC /* Managers */,
 				F0971C5228E7207E00E2A5DC /* Components */,
 				F0971C5128E7200800E2A5DC /* Utils */,
 				F0971BFF28E6F2DA00E2A5DC /* DataOperations */,
@@ -382,6 +387,7 @@
 			isa = PBXGroup;
 			children = (
 				F0971C7528E7385700E2A5DC /* Double+Extension.swift */,
+				F0971C7E28E9DBAF00E2A5DC /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -392,6 +398,14 @@
 				F0971C7828E73AA200E2A5DC /* HomeDataFormatter.swift */,
 			);
 			path = DataFormatter;
+			sourceTree = "<group>";
+		};
+		F0971C7A28E9D3E800E2A5DC /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				F0971C7B28E9D3F200E2A5DC /* CoreDataManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -547,6 +561,8 @@
 				F0971BF328E6EAF500E2A5DC /* HomeViewController.swift in Sources */,
 				F0971C2128E70B2400E2A5DC /* ProductResponse.swift in Sources */,
 				F0971BFA28E6EC6A00E2A5DC /* Coordinator.swift in Sources */,
+				F0971C7C28E9D3F200E2A5DC /* CoreDataManager.swift in Sources */,
+				F0971C7F28E9DBAF00E2A5DC /* Array+Extension.swift in Sources */,
 				F0971C7628E7385700E2A5DC /* Double+Extension.swift in Sources */,
 				F0971C5028E71FE300E2A5DC /* ImageCacheManager.swift in Sources */,
 				F0971C4D28E71F8200E2A5DC /* HomeCellDisplayerView.swift in Sources */,

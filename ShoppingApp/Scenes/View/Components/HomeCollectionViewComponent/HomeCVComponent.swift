@@ -13,10 +13,11 @@ class HomeCVComponent: GenericBaseView<HomeCVData> {
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: 0)
+//        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: 250)
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let coll = UICollectionView(frame: .zero, collectionViewLayout: layout)
         coll.translatesAutoresizingMaskIntoConstraints = false
         coll.backgroundColor = .white
@@ -64,5 +65,13 @@ extension HomeCVComponent: UICollectionViewDelegate, UICollectionViewDataSource 
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.dataProvider?.selectedItem(at: indexPath.row)
+    }
+}
+
+extension HomeCVComponent: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (UIScreen.main.bounds.width - 40) / 2
+        let height = (UIScreen.main.bounds.height) / 3
+        return CGSize(width: width, height: height)
     }
 }

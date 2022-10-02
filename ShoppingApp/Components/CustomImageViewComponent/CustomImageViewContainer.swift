@@ -14,7 +14,6 @@ class CustomImageViewContainer: GenericBaseView<CustomImageViewData> {
         let temp = CustomImageViewComponent()
         temp.translatesAutoresizingMaskIntoConstraints = false
         temp.clipsToBounds = true
-        temp.image = UIImage(named: "placeholder")
         temp.contentMode = .scaleAspectFit
         return temp
     }()
@@ -43,5 +42,4 @@ class CustomImageViewContainer: GenericBaseView<CustomImageViewData> {
             self.customImageView.contentMode = data.contentMode
         }
     }
-
 }

@@ -83,8 +83,28 @@ class HomeCellDisplayerView: GenericBaseView<GenericDataProtocol> {
     override func loadDataView() {
         super.loadDataView()
         guard let data = returnData() as? HomeCellDisplayerData else { return }
-        imageContainer.set(data: CustomImageViewData(imageUrl: data.productImageData))
+        imageContainer.set(data: CustomImageViewData(imageUrl: parseImageUrl(from: data.productImageData)))
         infoView.text = data.productName
         priceLabel.text = data.productPrice.priceToString(with: "₺")
     }
+
+    private func parseImageUrl(from urlString: String) -> String {
+        guard let imageUrl = URL(string: urlString) else { return "" }
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "raw.githubusercontent.com"
+        var urlPathComponents = [String]()
+        imageUrl.pathComponents.forEach { path in
+            if path != "blob" {
+                urlPathComponents.append(path)
+            }
+        }
+        components.path = urlPathComponents.joined(separator: "/")
+        return components.url?.absoluteString ?? ""
+    }
 }
+
+/*
+    from: https://github.com/android-getir/public-files/blob/main/images/60ad26592af303bcbf206148_b64a8058-ef7e-43ec-9214-71130b5ba1a4.jpeg/
+    to: https://raw.githubusercontent.com/android-getir/public-files/main/images/60ad26592af303bcbf206148_b64a8058-ef7e-43ec-9214-71130b5ba1a4.jpeg
+*/
