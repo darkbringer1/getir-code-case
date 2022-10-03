@@ -16,7 +16,8 @@ class HomeViewCoordinator: CoordinatorProtocol, HomeViewCoordinatorProtocol {
 
     func start() {
         let formatter = HomeDataFormatter()
-        let viewModel = HomeViewModel(formatter: formatter)
+        let networkChecker = NetworkCheckerManager.shared
+        let viewModel = HomeViewModel(formatter: formatter, networkChecker: networkChecker)
         let vc = HomeViewController(viewModel: viewModel)
         rootViewController = UINavigationController(rootViewController: vc)
     }

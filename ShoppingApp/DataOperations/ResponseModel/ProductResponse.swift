@@ -13,4 +13,6 @@ struct Product: Codable {
     let productName, productDescription: String
     let productPrice: Double
     let productImage: String
+    let productId: String?
+    let productCount: Int16?
 }

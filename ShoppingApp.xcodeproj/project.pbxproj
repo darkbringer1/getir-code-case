@@ -40,6 +40,9 @@
 		F0971C7928E73AA200E2A5DC /* HomeDataFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C7828E73AA200E2A5DC /* HomeDataFormatter.swift */; };
 		F0971C7C28E9D3F200E2A5DC /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C7B28E9D3F200E2A5DC /* CoreDataManager.swift */; };
 		F0971C7F28E9DBAF00E2A5DC /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C7E28E9DBAF00E2A5DC /* Array+Extension.swift */; };
+		F0971C8228E9DD9E00E2A5DC /* ShoppingListCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C8128E9DD9E00E2A5DC /* ShoppingListCoreDataManager.swift */; };
+		F0971C8828E9DE4700E2A5DC /* ShoppingListEntity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0971C8628E9DE4700E2A5DC /* ShoppingListEntity.xcdatamodeld */; };
+		F0971C8A28E9E93E00E2A5DC /* NetworkChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971C8928E9E93E00E2A5DC /* NetworkChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +100,9 @@
 		F0971C7828E73AA200E2A5DC /* HomeDataFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataFormatter.swift; sourceTree = "<group>"; };
 		F0971C7B28E9D3F200E2A5DC /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F0971C7E28E9DBAF00E2A5DC /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
+		F0971C8128E9DD9E00E2A5DC /* ShoppingListCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListCoreDataManager.swift; sourceTree = "<group>"; };
+		F0971C8728E9DE4700E2A5DC /* ShoppingListItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingListItem.xcdatamodel; sourceTree = "<group>"; };
+		F0971C8928E9E93E00E2A5DC /* NetworkChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,16 +156,17 @@
 		6E1341B2280605060092B126 /* ShoppingApp */ = {
 			isa = PBXGroup;
 			children = (
+				F0971BF828E6EC5D00E2A5DC /* Coordinator */,
 				F0971C7A28E9D3E800E2A5DC /* Managers */,
 				F0971C5228E7207E00E2A5DC /* Components */,
 				F0971C5128E7200800E2A5DC /* Utils */,
 				F0971BFF28E6F2DA00E2A5DC /* DataOperations */,
-				F0971BF828E6EC5D00E2A5DC /* Coordinator */,
 				F0971BF128E6EAE200E2A5DC /* Scenes */,
 				F0971BFE28E6EEBA00E2A5DC /* App */,
 				6E1341BC280605070092B126 /* Assets.xcassets */,
 				6E1341BE280605070092B126 /* LaunchScreen.storyboard */,
 				6E1341C1280605070092B126 /* Info.plist */,
+				F0971C8628E9DE4700E2A5DC /* ShoppingListEntity.xcdatamodeld */,
 			);
 			path = ShoppingApp;
 			sourceTree = "<group>";
@@ -237,6 +244,7 @@
 		F0971BFF28E6F2DA00E2A5DC /* DataOperations */ = {
 			isa = PBXGroup;
 			children = (
+				F0971C8028E9DD7F00E2A5DC /* CoreData */,
 				F0971C2528E70B9900E2A5DC /* Service */,
 				F0971C2228E70B8200E2A5DC /* RequestModel */,
 				F0971C1F28E70A0A00E2A5DC /* ResponseModel */,
@@ -287,7 +295,6 @@
 			isa = PBXGroup;
 			children = (
 				F0971C6428E7271C00E2A5DC /* HomeCollectionViewComponent */,
-				F0971C6328E7270D00E2A5DC /* HomeCellComponent */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -378,6 +385,7 @@
 		F0971C6E28E729B900E2A5DC /* HomeCVCell */ = {
 			isa = PBXGroup;
 			children = (
+				F0971C6328E7270D00E2A5DC /* HomeCellComponent */,
 				F0971C7028E72A8100E2A5DC /* HomeCVCell.swift */,
 			);
 			path = HomeCVCell;
@@ -404,8 +412,17 @@
 			isa = PBXGroup;
 			children = (
 				F0971C7B28E9D3F200E2A5DC /* CoreDataManager.swift */,
+				F0971C8928E9E93E00E2A5DC /* NetworkChecker.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		F0971C8028E9DD7F00E2A5DC /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F0971C8128E9DD9E00E2A5DC /* ShoppingListCoreDataManager.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -543,7 +560,10 @@
 			files = (
 				F0971BF528E6EB3400E2A5DC /* HomeViewCoordinator.swift in Sources */,
 				F0971C6B28E727C700E2A5DC /* GenericDataProtocol.swift in Sources */,
+				F0971C8A28E9E93E00E2A5DC /* NetworkChecker.swift in Sources */,
+				F0971C8228E9DD9E00E2A5DC /* ShoppingListCoreDataManager.swift in Sources */,
 				F0971C5528E720AB00E2A5DC /* CustomImageViewComponent.swift in Sources */,
+				F0971C8828E9DE4700E2A5DC /* ShoppingListEntity.xcdatamodeld in Sources */,
 				F0971BF728E6EB3B00E2A5DC /* HomeViewModel.swift in Sources */,
 				F0971C5F28E723EC00E2A5DC /* GenericBaseView.swift in Sources */,
 				F0971C2728E70BAC00E2A5DC /* ProductService.swift in Sources */,
@@ -904,6 +924,19 @@
 			productName = NetworkLayer;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		F0971C8628E9DE4700E2A5DC /* ShoppingListEntity.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F0971C8728E9DE4700E2A5DC /* ShoppingListItem.xcdatamodel */,
+			);
+			currentVersion = F0971C8728E9DE4700E2A5DC /* ShoppingListItem.xcdatamodel */;
+			path = ShoppingListEntity.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6E1341A8280605060092B126 /* Project object */;
 }

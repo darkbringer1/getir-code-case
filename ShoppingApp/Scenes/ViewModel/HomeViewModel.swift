@@ -13,15 +13,24 @@ protocol HomeViewModelProtocol: DataProviderProtocol {
     var coordinator: HomeViewCoordinatorProtocol? { get }
     func getData()
     func subscribeHomeViewState(with completion: @escaping HomeViewStateBlock)
+    func saveItems(from products: [Product])
+    func getItems()
+    func subscribeNetworkState()
 }
 
 class HomeViewModel: HomeViewModelProtocol {
     var coordinator: HomeViewCoordinatorProtocol?
     var dataFormatter: HomeDataFormatterProtocol
     var homeViewState: HomeViewStateBlock?
+    var coreDataManager = CoreDataManager.shared
+    var shoppingListDataManager: ShoppingListCoreDataManager
+    var networkChecker: NetworkCheckerManager
 
-    init(formatter: HomeDataFormatterProtocol) {
+    init(formatter: HomeDataFormatterProtocol,
+         networkChecker: NetworkCheckerManager) {
         self.dataFormatter = formatter
+        self.shoppingListDataManager = ShoppingListCoreDataManager(coreDataManager: coreDataManager)
+        self.networkChecker = networkChecker
     }
 
     func getData() {
@@ -29,6 +38,19 @@ class HomeViewModel: HomeViewModelProtocol {
         do {
             guard let urlRequest = try? ProductService(request: Request()).returnURLRequest() else { return }
             apiCall(with: urlRequest, completion: dataListener)
+        }
+    }
+
+    func subscribeNetworkState() {
+        networkChecker.startNetworkListener { [weak self] networkState in
+            switch networkState {
+            case .online:
+                // MARK: - online data call
+                self?.getData()
+            case .offline:
+                // MARK: - get items from core data if any
+                self?.getItems()
+            }
         }
     }
 
@@ -44,8 +66,10 @@ class HomeViewModel: HomeViewModelProtocol {
         switch result {
         case .failure(let error):
             print("Error data listener: \(error)")
+            self?.homeViewState?(.error)
         case .success(let response):
             print("data: \(response)")
+            self?.saveItems(from: response)
             self?.apiCallHandler(from: response)
         }
     }
@@ -67,6 +91,19 @@ extension HomeViewModel: DataProviderProtocol {
 
     func selectedItem(at index: Int) {
         debugPrint(dataFormatter.getItem(at: index))
+    }
+}
+
+// MARK: - CoreDataOps
+extension HomeViewModel {
+    func saveItems(from products: [Product]) {
+        shoppingListDataManager.saveToCoreData(cartList: products)
+    }
+
+    func getItems() {
+        let list = shoppingListDataManager.returnItemsFromCoreData()
+        homeViewState?(list.isEmpty ? .error : .loading)
+        apiCallHandler(from: list)
     }
 }
 

@@ -20,8 +20,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
-        viewModelListener()
         addMainComponent()
+        viewModelListeners()
     }
 
     func addMainComponent() {
@@ -38,16 +38,16 @@ class HomeViewController: UIViewController {
         ])
     }
 
-    func viewModelListener() {
-        viewModel.getData()
-        viewModel.subscribeHomeViewState { [weak self] state in
-            switch state {
+    func viewModelListeners() {
+        viewModel.subscribeNetworkState()
+        viewModel.subscribeHomeViewState { [weak self] viewState in
+            switch viewState {
             case .loading:
                 break
             case .done:
                 self?.homeCVComponent.reloadCollectionView()
             case .error:
-                break
+                self?.viewModel.getItems()
             }
         }
     }
