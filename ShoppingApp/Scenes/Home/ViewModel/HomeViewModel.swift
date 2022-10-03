@@ -7,29 +7,29 @@
 
 import Foundation
 import NetworkLayer
+
 typealias HomeViewStateBlock = (HomeViewState) -> Void
 
 protocol HomeViewModelProtocol: DataProviderProtocol {
     var coordinator: HomeViewCoordinatorProtocol? { get }
     func getData()
     func subscribeHomeViewState(with completion: @escaping HomeViewStateBlock)
-    func saveItems(from products: [Product])
-    func getItems()
     func subscribeNetworkState()
 }
 
 class HomeViewModel: HomeViewModelProtocol {
     var coordinator: HomeViewCoordinatorProtocol?
     var dataFormatter: HomeDataFormatterProtocol
+
+    // View states
     var homeViewState: HomeViewStateBlock?
-    var coreDataManager = CoreDataManager.shared
-    var shoppingListDataManager: ShoppingListCoreDataManager
+
+    // Managers
     var networkChecker: NetworkCheckerManager
 
     init(formatter: HomeDataFormatterProtocol,
          networkChecker: NetworkCheckerManager) {
         self.dataFormatter = formatter
-        self.shoppingListDataManager = ShoppingListCoreDataManager(coreDataManager: coreDataManager)
         self.networkChecker = networkChecker
     }
 
@@ -49,7 +49,7 @@ class HomeViewModel: HomeViewModelProtocol {
                 self?.getData()
             case .offline:
                 // MARK: - get items from core data if any
-                self?.getItems()
+                self?.apiCallHandler(from: self?.dataFormatter.getItemsFromDisk())
             }
         }
     }
@@ -67,19 +67,25 @@ class HomeViewModel: HomeViewModelProtocol {
         case .failure(let error):
             print("Error data listener: \(error)")
             self?.homeViewState?(.error)
+            self?.apiCallHandler(from: self?.dataFormatter.getItemsFromDisk())
         case .success(let response):
             print("data: \(response)")
-            self?.saveItems(from: response)
+            self?.dataFormatter.saveItems(from: response)
             self?.apiCallHandler(from: response)
         }
     }
 
-    private func apiCallHandler(from response: ProductResponse) {
+    private func apiCallHandler(from response: ProductResponse?) {
+        guard let response = response else {
+            homeViewState?(.error)
+            return
+        }
         dataFormatter.setData(with: response)
         homeViewState?(.done)
     }
 }
 
+// MARK: - CV Data Provider
 extension HomeViewModel: DataProviderProtocol {
     func askNumberOfItem(in section: Int) -> Int {
         dataFormatter.getNumberOfItems(in: section) ?? 0
@@ -90,21 +96,13 @@ extension HomeViewModel: DataProviderProtocol {
     }
 
     func selectedItem(at index: Int) {
-        debugPrint(dataFormatter.getItem(at: index))
+        guard let product = dataFormatter.getItem(at: index) else { return }
+        coordinator?.navigateToDetailView(with: product)
     }
 }
 
 // MARK: - CoreDataOps
 extension HomeViewModel {
-    func saveItems(from products: [Product]) {
-        shoppingListDataManager.saveToCoreData(cartList: products)
-    }
-
-    func getItems() {
-        let list = shoppingListDataManager.returnItemsFromCoreData()
-        homeViewState?(list.isEmpty ? .error : .loading)
-        apiCallHandler(from: list)
-    }
 }
 
 enum HomeViewState {

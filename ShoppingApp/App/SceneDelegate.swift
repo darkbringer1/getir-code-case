@@ -52,7 +52,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func startMainView() {
-        let homeCoordinator = HomeViewCoordinator()
+        let homeFactory = HomeFactory()
+        let homeCoordinator = HomeViewCoordinator(homeFactory: homeFactory)
         homeCoordinator.start()
 
         window?.rootViewController = homeCoordinator.rootViewController

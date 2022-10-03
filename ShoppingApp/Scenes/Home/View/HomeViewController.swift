@@ -47,7 +47,7 @@ class HomeViewController: UIViewController {
             case .done:
                 self?.homeCVComponent.reloadCollectionView()
             case .error:
-                self?.viewModel.getItems()
+                break
             }
         }
     }

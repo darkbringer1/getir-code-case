@@ -10,9 +10,9 @@ import Foundation
 typealias ProductResponse = [Product]
 
 struct Product: Codable {
-    let productName, productDescription: String
-    let productPrice: Double
-    let productImage: String
-    let productId: String?
-    let productCount: Int16?
+    var productName, productDescription: String
+    var productPrice: Double
+    var productImage: String
+    var productId: String?
+    var productCount: Int16
 }

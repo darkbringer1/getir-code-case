@@ -11,10 +11,18 @@ protocol HomeDataFormatterProtocol {
     func getNumberOfItems(in section: Int) -> Int?
     func getItem(at index: Int) -> Product?
     func askData(at index: Int) -> GenericDataProtocol?
+    func saveItems(from products: [Product])
+    func getItemsFromDisk() -> ProductResponse
 }
 
 class HomeDataFormatter: HomeDataFormatterProtocol {
     private var data: ProductResponse?
+    private var coreDataManager = CoreDataManager.shared
+    private var shoppingListDataManager: ShoppingListCoreDataManager
+
+    init() {
+        self.shoppingListDataManager = ShoppingListCoreDataManager(coreDataManager: coreDataManager)
+    }
 
     func setData(with response: ProductResponse?) {
         data = response
@@ -34,5 +42,13 @@ class HomeDataFormatter: HomeDataFormatterProtocol {
                                      productName: product.productName,
                                      productPrice: product.productPrice,
                                      productDescription: product.productDescription)
+    }
+
+    func saveItems(from products: [Product]) {
+        shoppingListDataManager.saveToCoreData(cartList: products)
+    }
+
+    func getItemsFromDisk() -> ProductResponse {
+        shoppingListDataManager.returnItemsFromCoreData()
     }
 }
