@@ -25,6 +25,9 @@ class DetailViewModel: DetailViewModelProtocol {
 
     init(productData: Product) {
         self.productData = productData
+        if self.productData.productCount == nil {
+            self.productData.productCount = 0
+        }
     }
 
     func getProductData() {
@@ -34,6 +37,7 @@ class DetailViewModel: DetailViewModelProtocol {
     func subscribeDetailDataState(with completion: @escaping DetailDataState) {
         dataState = completion
     }
+    
     func subscribeDetailDataChangeListener(with completion: @escaping DetailDataChangeBlock) {
         detailDataChange = completion
     }
@@ -50,14 +54,14 @@ class DetailViewModel: DetailViewModelProtocol {
 
     lazy var plusButtonHandler: () -> Void = {
         print("Add button pressed")
-        self.productData.productCount += Int16(1)
+        self.productData.productCount? += Int16(1)
         self.detailDataChange?(.dataChanged)
     }
 
     lazy var minusButtonHandler: () -> Void = {
         print("Substract button pressed")
-        if self.productData.productCount > 0 {
-            self.productData.productCount -= Int16(1)
+        if self.productData.productCount ?? 0 > 0 {
+            self.productData.productCount? -= Int16(1)
         }
         self.detailDataChange?(.dataChanged)
     }
@@ -71,7 +75,7 @@ class DetailViewModel: DetailViewModelProtocol {
             .setPlusButtonAction(by: plusButtonHandler)
             .setMinusButtonAction(by: minusButtonHandler)
             .setAddToShoppingListAction(by: addToShoppingListHandler)
-            .setCountData(by: Int(productData.productCount))
+            .setCountData(by: Int(productData.productCount ?? 0))
     }
 }
 

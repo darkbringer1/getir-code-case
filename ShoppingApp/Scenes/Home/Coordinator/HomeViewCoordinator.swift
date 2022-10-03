@@ -9,6 +9,7 @@ import UIKit
 
 protocol HomeViewCoordinatorProtocol {
     func navigateToDetailView(with item: Product)
+    func navigateToBasketView()
 }
 
 class HomeViewCoordinator: CoordinatorProtocol, HomeViewCoordinatorProtocol {
@@ -35,5 +36,15 @@ class HomeViewCoordinator: CoordinatorProtocol, HomeViewCoordinatorProtocol {
         navigationTitle.textAlignment = .center
         navigationTitle.font = .systemFont(ofSize: 16, weight: .medium)
         detailVC.navigationItem.titleView = navigationTitle
+    }
+
+    func navigateToBasketView() {
+        let basketVC = homeFactory.goToBasketView(coordinator: self)
+        rootViewController.pushViewController(basketVC, animated: true)
+        let navigationTitle = UILabel()
+        navigationTitle.text = "Sepetim"
+        navigationTitle.textAlignment = .center
+        navigationTitle.font = .systemFont(ofSize: 16, weight: .medium)
+        basketVC.navigationItem.titleView = navigationTitle
     }
 }

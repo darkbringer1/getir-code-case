@@ -32,6 +32,8 @@
 		F026A6B128EB4CCF00356B4E /* ProductFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026A6B028EB4CCF00356B4E /* ProductFooterView.swift */; };
 		F026A6B328EB4CD900356B4E /* ProductFooterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026A6B228EB4CD900356B4E /* ProductFooterData.swift */; };
 		F026A6B528EB576800356B4E /* UIControl+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026A6B428EB576800356B4E /* UIControl+Extension.swift */; };
+		F026A6B828EB888A00356B4E /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026A6B728EB888A00356B4E /* BasketViewController.swift */; };
+		F026A6BA28EB8ADE00356B4E /* BasketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F026A6B928EB8ADE00356B4E /* BasketViewModel.swift */; };
 		F0971BF328E6EAF500E2A5DC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF228E6EAF500E2A5DC /* HomeViewController.swift */; };
 		F0971BF528E6EB3400E2A5DC /* HomeViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF428E6EB3400E2A5DC /* HomeViewCoordinator.swift */; };
 		F0971BF728E6EB3B00E2A5DC /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0971BF628E6EB3B00E2A5DC /* HomeViewModel.swift */; };
@@ -110,6 +112,8 @@
 		F026A6B028EB4CCF00356B4E /* ProductFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductFooterView.swift; sourceTree = "<group>"; };
 		F026A6B228EB4CD900356B4E /* ProductFooterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductFooterData.swift; sourceTree = "<group>"; };
 		F026A6B428EB576800356B4E /* UIControl+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Extension.swift"; sourceTree = "<group>"; };
+		F026A6B728EB888A00356B4E /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
+		F026A6B928EB8ADE00356B4E /* BasketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewModel.swift; sourceTree = "<group>"; };
 		F0971BF228E6EAF500E2A5DC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F0971BF428E6EB3400E2A5DC /* HomeViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCoordinator.swift; sourceTree = "<group>"; };
 		F0971BF628E6EB3B00E2A5DC /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -338,9 +342,19 @@
 			path = FooterView;
 			sourceTree = "<group>";
 		};
+		F026A6B628EB887B00356B4E /* Basket */ = {
+			isa = PBXGroup;
+			children = (
+				F026A6B728EB888A00356B4E /* BasketViewController.swift */,
+				F026A6B928EB8ADE00356B4E /* BasketViewModel.swift */,
+			);
+			path = Basket;
+			sourceTree = "<group>";
+		};
 		F0971BF128E6EAE200E2A5DC /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F026A6B628EB887B00356B4E /* Basket */,
 				F026A68528EB196C00356B4E /* Detail */,
 				F026A68428EB196500356B4E /* Home */,
 			);
@@ -710,6 +724,7 @@
 			files = (
 				F0971BF528E6EB3400E2A5DC /* HomeViewCoordinator.swift in Sources */,
 				F026A6AA28EB3F2900356B4E /* ProductDetailDisplayerView.swift in Sources */,
+				F026A6B828EB888A00356B4E /* BasketViewController.swift in Sources */,
 				F0971C6B28E727C700E2A5DC /* GenericDataProtocol.swift in Sources */,
 				F026A68C28EB1EC100356B4E /* DetailViewCoordinator.swift in Sources */,
 				F0971C8A28E9E93E00E2A5DC /* NetworkChecker.swift in Sources */,
@@ -721,6 +736,7 @@
 				F0971C8828E9DE4700E2A5DC /* ShoppingListEntity.xcdatamodeld in Sources */,
 				F0971BF728E6EB3B00E2A5DC /* HomeViewModel.swift in Sources */,
 				F0971C5F28E723EC00E2A5DC /* GenericBaseView.swift in Sources */,
+				F026A6BA28EB8ADE00356B4E /* BasketViewModel.swift in Sources */,
 				F026A68F28EB20AD00356B4E /* HomeFactory.swift in Sources */,
 				F0971C2728E70BAC00E2A5DC /* ProductService.swift in Sources */,
 				F0971C7328E72DA000E2A5DC /* BaseCollectionViewCell.swift in Sources */,

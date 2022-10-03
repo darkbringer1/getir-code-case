@@ -23,4 +23,10 @@ final class HomeFactory {
         let vc = DetailViewController(viewModel: viewModel)
         return vc
     }
+
+    func goToBasketView(coordinator: HomeViewCoordinatorProtocol) -> UIViewController {
+        let viewModel = BasketViewModel()
+        let vc = BasketViewController(viewModel: viewModel)
+        return vc
+    }
 }

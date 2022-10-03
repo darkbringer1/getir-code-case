@@ -22,6 +22,7 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .blue
         addMainComponent()
         viewModelListeners()
+        configureNavigationBar()
     }
 
     func addMainComponent() {
@@ -50,5 +51,19 @@ class HomeViewController: UIViewController {
                 break
             }
         }
+    }
+
+    func configureNavigationBar() {
+        let rightButtonView = UIButton(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+        rightButtonView.setImage(UIImage(systemName: "cart"), for: .normal)
+        rightButtonView.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        rightButtonView.tintColor = .systemMint
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButtonView)
+
+    }
+
+    @objc func tap() {
+        print("sepet")
+        viewModel.navigateToBasket()
     }
 }

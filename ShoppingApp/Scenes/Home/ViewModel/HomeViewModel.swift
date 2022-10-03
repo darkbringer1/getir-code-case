@@ -15,6 +15,7 @@ protocol HomeViewModelProtocol: DataProviderProtocol {
     func getData()
     func subscribeHomeViewState(with completion: @escaping HomeViewStateBlock)
     func subscribeNetworkState()
+    func navigateToBasket()
 }
 
 class HomeViewModel: HomeViewModelProtocol {
@@ -58,6 +59,9 @@ class HomeViewModel: HomeViewModelProtocol {
         homeViewState = completion
     }
 
+    func navigateToBasket() {
+        coordinator?.navigateToBasketView()
+    }
     private func apiCall(with urlRequest: URLRequest, completion: @escaping (Result<ProductResponse, Error>) -> Void) {
         APIManager.shared.executeRequest(urlRequest: urlRequest, completion: completion)
     }

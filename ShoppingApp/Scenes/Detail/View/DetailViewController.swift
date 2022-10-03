@@ -10,8 +10,6 @@ import UIKit
 class DetailViewController: UIViewController {
     var viewModel: DetailViewModelProtocol!
     private var detailComponent: ProductDetailView!
-    var productCount: Int = 0
-    var productFooterData: ProductFooterData!
 
     convenience init(viewModel: DetailViewModelProtocol) {
         self.init()
@@ -20,7 +18,6 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemMint
         addMainComponent()
         subscribeViewModelListeners()
     }

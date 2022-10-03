@@ -89,7 +89,7 @@ extension ProductDetailView: UICollectionViewDelegate, UICollectionViewDataSourc
         return CGSize(width: UIScreen.main.bounds.width, height: 340)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width, height: 120)
+        return CGSize(width: UIScreen.main.bounds.width, height: 116)
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
