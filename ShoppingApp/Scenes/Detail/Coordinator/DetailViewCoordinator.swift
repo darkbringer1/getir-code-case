@@ -11,6 +11,6 @@ protocol DetailViewCoordinatorProtocol {
 
 }
 
-class DetailViewCoordinator: DetailViewModelProtocol {
+class DetailViewCoordinator: DetailViewCoordinatorProtocol {
 
 }

@@ -18,10 +18,9 @@ final class HomeFactory {
     }
 
     func createDetailView(coordinator: HomeViewCoordinatorProtocol, product: Product) -> UIViewController {
-        let viewModel = DetailViewModel()
+        let viewModel = DetailViewModel(productData: product)
         viewModel.coordinator = coordinator
         let vc = DetailViewController(viewModel: viewModel)
-
         return vc
     }
 }

@@ -61,9 +61,7 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
                     object.productId = productId
                 }
 
-                if let productCount = product.productCount {
-                    object.productCount = productCount
-                }
+                object.productCount = product.productCount
 
                 coreDataManager.saveContext()
             }

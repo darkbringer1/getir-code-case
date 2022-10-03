@@ -53,7 +53,8 @@ public class APIManager: APIManagerProtocol {
                 debugPrint("Decoded response data: \(dataDecoded)")
                 completion(.success(dataDecoded))
             } catch {
-                debugPrint("Decoding Error! \nCode: \(error._code) \nErrorDescription: \(error.localizedDescription)")
+                completion(.failure(error))
+                debugPrint("Decoding Error! \n Code: \(error._code) \n ErrorDescription: \(error.localizedDescription)")
             }
         }
     }
