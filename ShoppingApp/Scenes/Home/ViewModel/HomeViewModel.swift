@@ -7,6 +7,7 @@
 
 import Foundation
 import NetworkLayer
+
 typealias HomeViewStateBlock = (HomeViewState) -> Void
 
 protocol HomeViewModelProtocol: DataProviderProtocol {
@@ -21,7 +22,11 @@ protocol HomeViewModelProtocol: DataProviderProtocol {
 class HomeViewModel: HomeViewModelProtocol {
     var coordinator: HomeViewCoordinatorProtocol?
     var dataFormatter: HomeDataFormatterProtocol
+
+    // View states
     var homeViewState: HomeViewStateBlock?
+
+    // Managers
     var coreDataManager = CoreDataManager.shared
     var shoppingListDataManager: ShoppingListCoreDataManager
     var networkChecker: NetworkCheckerManager
@@ -80,6 +85,7 @@ class HomeViewModel: HomeViewModelProtocol {
     }
 }
 
+// MARK: - CV Data Provider
 extension HomeViewModel: DataProviderProtocol {
     func askNumberOfItem(in section: Int) -> Int {
         dataFormatter.getNumberOfItems(in: section) ?? 0
@@ -90,7 +96,8 @@ extension HomeViewModel: DataProviderProtocol {
     }
 
     func selectedItem(at index: Int) {
-        debugPrint(dataFormatter.getItem(at: index))
+        guard let product = dataFormatter.getItem(at: index) else { return }
+        coordinator?.navigateToDetailView(with: product)
     }
 }
 
