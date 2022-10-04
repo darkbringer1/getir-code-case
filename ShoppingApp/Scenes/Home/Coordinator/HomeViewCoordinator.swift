@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol HomeViewCoordinatorProtocol {
+protocol HomeViewCoordinatorProtocol: AnyObject {
     func navigateToDetailView(with item: Product, addToBasket: @escaping AddToBasketStateBlock)
     func navigateToBasketView()
 }

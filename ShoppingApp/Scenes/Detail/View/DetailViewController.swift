@@ -8,7 +8,7 @@
 import UIKit
 
 final class DetailViewController: UIViewController, ErrorHandlingProtocol {
-    var viewModel: DetailViewModelProtocol!
+    private var viewModel: DetailViewModelProtocol!
     private var detailComponent: ProductDetailView!
 
     convenience init(viewModel: DetailViewModelProtocol) {
@@ -41,7 +41,9 @@ final class DetailViewController: UIViewController, ErrorHandlingProtocol {
             guard let self = self else { return }
             switch state {
             case true:
-                self.showAlert(with: self.viewModel.showAddedToBasketAlert())
+                self.showAlert(with: self.viewModel.showAddedToBasketAlert {
+                    self.popViewController()
+                })
             case false:
                 break
             }

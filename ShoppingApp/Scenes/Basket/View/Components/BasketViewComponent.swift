@@ -8,7 +8,7 @@
 import UIKit
 
 final class BasketViewComponent: GenericBaseView<BasketViewData> {
-    var dataProvider: BasketDataProviderProtocol?
+    weak var dataProvider: BasketDataProviderProtocol?
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

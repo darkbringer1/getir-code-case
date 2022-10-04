@@ -9,7 +9,7 @@ import UIKit
 
 final class HomeViewController: UIViewController, ErrorHandlingProtocol {
     
-    var viewModel: HomeViewModelProtocol!
+    private var viewModel: HomeViewModelProtocol!
     private var homeCVComponent: HomeCVComponent!
 
     convenience init(viewModel: HomeViewModelProtocol) {
@@ -25,7 +25,7 @@ final class HomeViewController: UIViewController, ErrorHandlingProtocol {
         configureNavigationBar()
     }
 
-    func addMainComponent() {
+    private func addMainComponent() {
         homeCVComponent = HomeCVComponent()
         homeCVComponent.translatesAutoresizingMaskIntoConstraints = false
         homeCVComponent.dataProvider = viewModel
@@ -39,7 +39,7 @@ final class HomeViewController: UIViewController, ErrorHandlingProtocol {
         ])
     }
 
-    func viewModelListeners() {
+    private func viewModelListeners() {
         viewModel.subscribeNetworkState()
         viewModel.homeViewStateListener { [weak self] viewState in
             switch viewState {
@@ -53,9 +53,9 @@ final class HomeViewController: UIViewController, ErrorHandlingProtocol {
         }
     }
 
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         addRightBarButton(imageSystemName: "cart") { [weak self] in
-            self?.viewModel.navigateToBasket {
+            self?.viewModel?.navigateToBasket {
                 self?.showAlert(with: Alert(title: "Sepetinizde hic urun bulunmamaktadir",
                                       message: "",
                                       actions: [AlertAction(title: "Tamam",

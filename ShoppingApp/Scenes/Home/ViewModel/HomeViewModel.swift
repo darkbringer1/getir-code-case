@@ -11,7 +11,6 @@ import NetworkLayer
 typealias HomeViewStateBlock = (HomeViewState) -> Void
 
 protocol HomeViewModelProtocol: HomeDataProviderProtocol {
-    var coordinator: HomeViewCoordinatorProtocol? { get }
     func getData()
     func homeViewStateListener(with completion: @escaping HomeViewStateBlock)
     func subscribeNetworkState()
@@ -19,8 +18,8 @@ protocol HomeViewModelProtocol: HomeDataProviderProtocol {
 }
 
 final class HomeViewModel: HomeViewModelProtocol {
-    var coordinator: HomeViewCoordinatorProtocol?
-    var dataFormatter: HomeDataFormatterProtocol
+    private var coordinator: HomeViewCoordinatorProtocol?
+    private var dataFormatter: HomeDataFormatterProtocol
 
     // View states
     var homeViewState: HomeViewStateBlock?
@@ -28,8 +27,10 @@ final class HomeViewModel: HomeViewModelProtocol {
     // Managers
     var networkChecker: NetworkCheckerManager
 
-    init(formatter: HomeDataFormatterProtocol,
+    init(coordinator: HomeViewCoordinatorProtocol,
+         formatter: HomeDataFormatterProtocol,
          networkChecker: NetworkCheckerManager) {
+        self.coordinator = coordinator
         self.dataFormatter = formatter
         self.networkChecker = networkChecker
     }
@@ -60,7 +61,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
 
     func navigateToBasket(with completion: @escaping () -> Void) {
-        if dataFormatter.getBasketItemCount() > 0 {
+        if dataFormatter.getBasketItemCount() ?? 0 > 0 {
             coordinator?.navigateToBasketView()
         } else {
             completion()
@@ -100,7 +101,7 @@ final class HomeViewModel: HomeViewModelProtocol {
 extension HomeViewModel: HomeDataProviderProtocol {
     func askNumberOfItem(in section: Int) -> Int {
         dataFormatter.getNumberOfItems(in: section) ?? 0
-    }
+    } 
 
     func askData(at index: Int) -> GenericDataProtocol? {
         dataFormatter.askData(at: index)
@@ -108,12 +109,12 @@ extension HomeViewModel: HomeDataProviderProtocol {
 
     func selectedItem(at index: Int) {
         guard let product = dataFormatter.getItem(at: index) else { return }
-        coordinator?.navigateToDetailView(with: product) { state in
+        coordinator?.navigateToDetailView(with: product) { [weak self] state in
             switch state {
             case true:
-                self.homeViewState?(.loading)
+                self?.homeViewState?(.loading)
             case false:
-                self.homeViewState?(.done)
+                self?.homeViewState?(.done)
             }
         }
     }

@@ -6,14 +6,14 @@
 //
 
 import Foundation
-protocol HomeDataFormatterProtocol {
+protocol HomeDataFormatterProtocol: AnyObject {
     func setData(with response: ProductResponse?)
     func getNumberOfItems(in section: Int) -> Int?
     func getItem(at index: Int) -> Product?
     func askData(at index: Int) -> GenericDataProtocol?
     func saveItems(from products: [Product])
-    func getItemsFromDisk() -> ProductResponse
-    func getBasketItemCount() -> Int
+    func getItemsFromDisk() -> ProductResponse?
+    func getBasketItemCount() -> Int?
 }
 
 final class HomeDataFormatter: HomeDataFormatterProtocol {
@@ -34,7 +34,7 @@ final class HomeDataFormatter: HomeDataFormatterProtocol {
 
     func getItem(at index: Int) -> Product? {
         let items = getItemsFromDisk()
-        return items[index]
+        return items?[index]
     }
 
     func askData(at index: Int) -> GenericDataProtocol? {
@@ -49,11 +49,11 @@ final class HomeDataFormatter: HomeDataFormatterProtocol {
         shoppingListDataManager.saveToCoreData(cartList: products)
     }
 
-    func getItemsFromDisk() -> ProductResponse {
+    func getItemsFromDisk() -> ProductResponse? {
         shoppingListDataManager.returnItemsFromCoreData()
     }
 
-    func getBasketItemCount() -> Int {
+    func getBasketItemCount() -> Int? {
         shoppingListDataManager.getBasketItems().count
     }
 }
