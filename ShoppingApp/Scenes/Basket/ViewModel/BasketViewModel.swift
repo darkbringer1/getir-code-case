@@ -16,13 +16,12 @@ protocol BasketViewModelProtocol: BasketDataProviderProtocol {
 }
 
 final class BasketViewModel: BasketViewModelProtocol {
-    private var shoppingListDataManager: ShoppingListCoreDataProtocol
+    var shoppingListDataManager: ShoppingListCoreDataProtocol?
     var coordinator: HomeViewCoordinatorProtocol?
     private var basketViewState: BasketViewStateBlock?
-    var orderConfirmedButtonListener: (() -> Void)?
+    private var orderConfirmedButtonListener: (() -> Void)?
 
     init() {
-        self.shoppingListDataManager = ShoppingListCoreDataManager()
         basketViewState?(.loading)
     }
 
@@ -42,25 +41,25 @@ final class BasketViewModel: BasketViewModelProtocol {
         return data
     }
 
+    func showOrderConfirmedAlert(action: @escaping () -> Void) -> Alert {
+        Alert(title: "Siparisiniz onaylandi!",
+              message: getBasketTotal(),
+              actions: [AlertAction(title: "Tamam",
+                                    style: .default,
+                                    action: action())],
+              style: .alert)
+    }
+
     private func getBasketCellArray() -> [BasketCellDisplayerData] {
-        let list = shoppingListDataManager.getBasketItems()
+        guard let list = shoppingListDataManager?.getBasketItems() else { return [] }
         return list.compactMap({ BasketCellDisplayerData(product: $0) })
     }
 
-    lazy var buyNowButtonPressed: () -> Void = { [weak self] in
+    private lazy var buyNowButtonPressed: () -> Void = { [weak self] in
         guard let self = self else { return }
         self.orderConfirmedButtonListener?()
-        self.shoppingListDataManager.removeAllOrders()
+        self.shoppingListDataManager?.removeAllOrders()
         self.basketViewState?(.loading)
-    }
-
-    func showOrderConfirmedAlert(action: @escaping () -> Void) -> Alert {
-            Alert(title: "Siparisiniz onaylandi!",
-                  message: getBasketTotal(),
-                  actions: [AlertAction(title: "Tamam",
-                                        style: .default,
-                                        action: action())],
-                  style: .alert)
     }
 
     private func getBasketTotal() -> String {

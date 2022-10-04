@@ -10,13 +10,13 @@ typealias DetailDataState = (Product) -> Void
 typealias DetailDataChangeBlock = (DetailChangeState) -> Void
 typealias AddToBasketStateBlock = (Bool) -> Void
 
-protocol DetailViewModelProtocol {
+protocol DetailViewModelProtocol: AnyObject {
     func getProductData()
     func detailDataState(with completion: @escaping DetailDataState)
     func formatData() -> ProductDetailViewData
     func detailDataChangeListener(with completion: @escaping DetailDataChangeBlock)
     func addToBasketListener(with completion: @escaping AddToBasketStateBlock)
-    func showAddedToBasketAlert() -> Alert
+    func showAddedToBasketAlert(action: @escaping () -> Void) -> Alert
 }
 
 final class DetailViewModel: DetailViewModelProtocol {
@@ -64,12 +64,12 @@ final class DetailViewModel: DetailViewModelProtocol {
         return detailData
     }
 
-    func showAddedToBasketAlert() -> Alert {
+    func showAddedToBasketAlert(action: @escaping () -> Void) -> Alert {
         Alert(title: "Sepetiniz guncellendi",
               message: "",
               actions: [AlertAction(title: "Tamam",
                                     style: .default,
-                                    action: .none)],
+                                    action: action())],
               style: .alert)
     }
 

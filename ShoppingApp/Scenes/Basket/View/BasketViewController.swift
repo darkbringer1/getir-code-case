@@ -8,7 +8,7 @@
 import UIKit
 
 final class BasketViewController: UIViewController, ErrorHandlingProtocol {
-    var viewModel: BasketViewModelProtocol!
+    private var viewModel: BasketViewModelProtocol!
     private var mainComponent: BasketViewComponent!
 
     convenience init(viewModel: BasketViewModelProtocol) {

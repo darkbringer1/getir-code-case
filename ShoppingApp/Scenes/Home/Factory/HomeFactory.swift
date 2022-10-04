@@ -15,8 +15,7 @@ final class HomeFactory {
         shoppingListDataManager.coreDataManager = coreDataManager
         let formatter = HomeDataFormatter(shoppingListCoreDataManager: shoppingListDataManager)
         let networkChecker = NetworkCheckerManager.shared
-        let viewModel = HomeViewModel(formatter: formatter, networkChecker: networkChecker)
-        viewModel.coordinator = coordinator
+        let viewModel = HomeViewModel(coordinator: coordinator, formatter: formatter, networkChecker: networkChecker)
         let vc = HomeViewController(viewModel: viewModel)
         return vc
     }
@@ -30,7 +29,9 @@ final class HomeFactory {
 
     func goToBasketView(coordinator: HomeViewCoordinatorProtocol) -> UIViewController {
         let viewModel = BasketViewModel()
+        let shoppingListDataManager = ShoppingListCoreDataManager()
         viewModel.coordinator = coordinator
+        viewModel.shoppingListDataManager = shoppingListDataManager
         let vc = BasketViewController(viewModel: viewModel)
         return vc
     }

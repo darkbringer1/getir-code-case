@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol DetailViewCoordinatorProtocol {
+protocol DetailViewCoordinatorProtocol: AnyObject {
 
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ShoppingListCoreDataProtocol {
+protocol ShoppingListCoreDataProtocol: AnyObject {
     var coreDataManager: CoreDataManager { get set }
     func saveToCoreData(cartList: Array<Product>)
     func updateEntity(shoppingItem: Product)

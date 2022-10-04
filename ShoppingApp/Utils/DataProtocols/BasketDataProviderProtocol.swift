@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol BasketDataProviderProtocol {
+protocol BasketDataProviderProtocol: AnyObject {
     func didSelect(product: Product)
 }
