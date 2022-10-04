@@ -17,8 +17,8 @@ final class HomeFactory {
         return vc
     }
 
-    func createDetailView(coordinator: HomeViewCoordinatorProtocol, product: Product, newItemAdded: NewItemAddBlock?) -> UIViewController {
-        let viewModel = DetailViewModel(productData: product, newItemAdded: newItemAdded)
+    func createDetailView(coordinator: HomeViewCoordinatorProtocol, product: Product) -> UIViewController {
+        let viewModel = DetailViewModel(productData: product)
         viewModel.coordinator = coordinator
         let vc = DetailViewController(viewModel: viewModel)
         return vc
@@ -26,6 +26,7 @@ final class HomeFactory {
 
     func goToBasketView(coordinator: HomeViewCoordinatorProtocol) -> UIViewController {
         let viewModel = BasketViewModel()
+        viewModel.coordinator = coordinator
         let vc = BasketViewController(viewModel: viewModel)
         return vc
     }

@@ -102,16 +102,7 @@ extension HomeViewModel: DataProviderProtocol {
 
     func selectedItem(at index: Int) {
         guard let product = dataFormatter.getItem(at: index) else { return }
-        coordinator?.navigateToDetailView(with: product) { [self] state in
-            switch state {
-            case true:
-                homeViewState?(.loading)
-                dataResponseHandler(from: dataFormatter.getItemsFromDisk())
-                homeViewState?(.done)
-            case false:
-                break
-            }
-        }
+        coordinator?.navigateToDetailView(with: product)
     }
 }
 

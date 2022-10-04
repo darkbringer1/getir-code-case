@@ -13,7 +13,6 @@ class HomeCVComponent: GenericBaseView<HomeCVData> {
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-//        layout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: 250)
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
