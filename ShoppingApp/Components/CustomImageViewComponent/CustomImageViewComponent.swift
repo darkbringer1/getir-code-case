@@ -54,7 +54,7 @@ final class CustomImageViewComponent: UIImageView {
         URLSession.shared.dataTask(with: url) { data, _, error in
             if error != nil {
                 completion()
-                print("Error in image download request: \(String(describing: error))")
+                debugPrint("Error in image download request: \(String(describing: error))")
                 return
             }
             DispatchQueue.main.async { [weak self] in
@@ -124,14 +124,14 @@ final class CustomImageViewComponent: UIImageView {
             do {
                 try FileManager.default.removeItem(atPath: fileURL.path)
             } catch let removeError {
-                print("couldn't remove file at path", removeError)
+                debugPrint("couldn't remove file at path", removeError)
             }
         }
 
         do {
             try data.write(to: fileURL)
         } catch let error {
-            print("error saving file with error", error)
+            debugPrint("error saving file with error", error)
         }
 
     }

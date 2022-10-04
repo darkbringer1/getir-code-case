@@ -9,7 +9,7 @@ import UIKit
 
 final class BasketViewController: UIViewController, ErrorHandlingProtocol {
     var viewModel: BasketViewModelProtocol!
-    private var mainComponent: BasketCollectionViewComponent!
+    private var mainComponent: BasketViewComponent!
 
     convenience init(viewModel: BasketViewModelProtocol) {
         self.init()
@@ -30,12 +30,11 @@ final class BasketViewController: UIViewController, ErrorHandlingProtocol {
     }
 
     private func addMainComponent() {
-        mainComponent = BasketCollectionViewComponent()
+        mainComponent = BasketViewComponent()
         mainComponent.translatesAutoresizingMaskIntoConstraints = false
         mainComponent.dataProvider = viewModel
 
         view.addSubview(mainComponent)
-
         NSLayoutConstraint.activate([
             mainComponent.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mainComponent.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -45,7 +44,7 @@ final class BasketViewController: UIViewController, ErrorHandlingProtocol {
     }
 
     private func subscribeToViewModelListeners() {
-        viewModel.subscribeToViewStateListener { [weak self] state in
+        viewModel.viewStateListener { [weak self] state in
             switch state {
             case .loading:
                 self?.mainComponent.set(data: self?.viewModel.getCollectionViewData())
@@ -53,9 +52,11 @@ final class BasketViewController: UIViewController, ErrorHandlingProtocol {
                 self?.mainComponent.reloadCollectionView()
             }
         }
-        viewModel.subscribeOrderConfirmedListener { [weak self] in
+        viewModel.orderConfirmedListener { [weak self] in
             guard let self = self else { return }
-            self.showAlert(with: self.viewModel.showOrderConfirmedAlert())
+            self.showAlert(with: self.viewModel.showOrderConfirmedAlert {
+                self.popViewController()
+            })
         }
     }
 

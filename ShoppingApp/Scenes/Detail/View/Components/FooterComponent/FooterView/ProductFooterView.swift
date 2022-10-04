@@ -26,7 +26,7 @@ final class ProductFooterView: GenericBaseView<ProductFooterData> {
     }()
 
     private lazy var topStackView: UIStackView = {
-        let temp = UIStackView(arrangedSubviews: [title, plusMinusStack])
+        let temp = UIStackView(arrangedSubviews: [title, countStack])
         temp.translatesAutoresizingMaskIntoConstraints = false
         temp.axis = .horizontal
         temp.distribution = .fillEqually
@@ -35,6 +35,8 @@ final class ProductFooterView: GenericBaseView<ProductFooterData> {
         temp.layer.cornerRadius = 6
         temp.clipsToBounds = true
         temp.backgroundColor = .systemTeal
+        temp.layoutMargins = UIEdgeInsets(top: 5, left: 16, bottom: 5, right: 0)
+        temp.isLayoutMarginsRelativeArrangement = true
         return temp
     }()
 
@@ -50,13 +52,26 @@ final class ProductFooterView: GenericBaseView<ProductFooterData> {
         return temp
     }()
 
+    private lazy var countStack: UIStackView = {
+        let temp = UIStackView(arrangedSubviews: [onCartLabel, plusMinusStack])
+        temp.translatesAutoresizingMaskIntoConstraints = false
+        temp.axis = .vertical
+        temp.alignment = .fill
+        temp.distribution = .fillEqually
+        temp.contentMode = .scaleAspectFill
+        return temp
+    }()
+
     private lazy var plusMinusStack: UIStackView = {
         let temp = UIStackView(arrangedSubviews: [minusButton, countLabel, plusButton])
         temp.translatesAutoresizingMaskIntoConstraints = false
         temp.axis = .horizontal
         temp.alignment = .fill
-        temp.distribution = .fillEqually
-        temp.contentMode = .scaleAspectFill
+        temp.distribution = .equalCentering
+        temp.contentMode = .scaleAspectFit
+        temp.spacing = 10
+        temp.layoutMargins = UIEdgeInsets(top: 5, left: 16, bottom: 5, right: 16)
+        temp.isLayoutMarginsRelativeArrangement = true
         return temp
     }()
 
@@ -76,13 +91,25 @@ final class ProductFooterView: GenericBaseView<ProductFooterData> {
         return temp
     }()
 
+    private lazy var onCartLabel: UILabel = {
+        let temp = UILabel()
+        temp.translatesAutoresizingMaskIntoConstraints = false
+        temp.textColor = .black
+        temp.text = "Sepette"
+        temp.lineBreakMode = .byWordWrapping
+        temp.numberOfLines = 1
+        temp.contentMode = .center
+        temp.textAlignment = .center
+        return temp
+    }()
+
     private lazy var countLabel: UILabel = {
         let temp = UILabel()
         temp.translatesAutoresizingMaskIntoConstraints = false
         temp.textColor = .black
         temp.text = " "
         temp.lineBreakMode = .byWordWrapping
-        temp.numberOfLines = 1
+        temp.numberOfLines = 2
         temp.contentMode = .center
         temp.textAlignment = .center
         return temp
@@ -91,7 +118,7 @@ final class ProductFooterView: GenericBaseView<ProductFooterData> {
     private lazy var addToShoppingList: UIButton = {
         let temp = UIButton()
         temp.translatesAutoresizingMaskIntoConstraints = false
-        temp.setTitle("Sepete Ekle", for: .normal)
+        temp.setTitle("Sepeti guncelle", for: .normal)
         temp.setImage(UIImage(systemName: "cart.badge.plus"), for: .normal)
         temp.tintColor = .black
         temp.setTitleColor(UIColor.black, for: .normal)
@@ -120,8 +147,7 @@ final class ProductFooterView: GenericBaseView<ProductFooterData> {
             mainStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             mainStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             addToShoppingList.heightAnchor.constraint(equalToConstant: 48),
-            topStackView.heightAnchor.constraint(equalToConstant: 48),
-            title.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16)
+            topStackView.heightAnchor.constraint(equalToConstant: 100),
         ])
     }
 

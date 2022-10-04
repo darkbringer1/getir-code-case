@@ -12,8 +12,12 @@ final class HomeCellDisplayerView: GenericBaseView<GenericDataProtocol> {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
-        view.clipsToBounds = true
+        view.clipsToBounds = false
         view.backgroundColor = .cyan
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.3
+        view.layer.shadowRadius = 6
+        view.layer.shadowOffset = CGSize(width: 0, height: 10)
         return view
     }()
 

@@ -37,6 +37,7 @@ final class DetailViewModel: DetailViewModelProtocol {
         }
     }
 
+    // MARK: - View methods
     func getProductData() {
         dataState?(productData)
     }
@@ -63,14 +64,22 @@ final class DetailViewModel: DetailViewModelProtocol {
         return detailData
     }
 
+    func showAddedToBasketAlert() -> Alert {
+        Alert(title: "Sepetiniz guncellendi",
+              message: "",
+              actions: [AlertAction(title: "Tamam",
+                                    style: .default,
+                                    action: .none)],
+              style: .alert)
+    }
+
+    // MARK: - Private methods
     private lazy var plusButtonHandler: () -> Void = { [weak self] in
-        print("Add button pressed")
         self?.productData.productCount? += Int16(1)
         self?.detailDataChange?(.dataChanged)
     }
 
     private lazy var minusButtonHandler: () -> Void = { [weak self] in
-        print("Substract button pressed")
         if self?.productData.productCount ?? 0 > 0 {
             self?.productData.productCount? -= Int16(1)
         }
@@ -78,7 +87,6 @@ final class DetailViewModel: DetailViewModelProtocol {
     }
 
     private lazy var addToShoppingListHandler: () -> Void = { [weak self] in
-        print("Add to shopping list tapped")
         self?.updateProduct()
         self?.addToBasketState?(true)
     }
@@ -89,15 +97,6 @@ final class DetailViewModel: DetailViewModelProtocol {
             .setMinusButtonAction(by: minusButtonHandler)
             .setAddToShoppingListAction(by: addToShoppingListHandler)
             .setCountData(by: Int(productData.productCount ?? 0))
-    }
-
-    func showAddedToBasketAlert() -> Alert {
-        Alert(title: "Urun sepete eklendi",
-              message: "",
-              actions: [AlertAction(title: "Tamam",
-                                    style: .default,
-                                    action: .none)],
-              style: .alert)
     }
 
     private func updateProduct() {

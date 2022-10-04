@@ -9,10 +9,10 @@ import Foundation
 typealias BasketViewStateBlock = (BasketViewState) -> Void
 
 protocol BasketViewModelProtocol: BasketDataProviderProtocol {
-    func getCollectionViewData() -> BasketCollectionViewData
-    func subscribeToViewStateListener(with completion: @escaping BasketViewStateBlock)
-    func showOrderConfirmedAlert() -> Alert
-    func subscribeOrderConfirmedListener(with completion: @escaping () -> Void)
+    func getCollectionViewData() -> BasketViewData
+    func viewStateListener(with completion: @escaping BasketViewStateBlock)
+    func showOrderConfirmedAlert(action: @escaping () -> Void) -> Alert
+    func orderConfirmedListener(with completion: @escaping () -> Void)
 }
 
 final class BasketViewModel: BasketViewModelProtocol {
@@ -26,16 +26,16 @@ final class BasketViewModel: BasketViewModelProtocol {
         basketViewState?(.loading)
     }
 
-    func subscribeOrderConfirmedListener(with completion: @escaping () -> Void) {
+    func orderConfirmedListener(with completion: @escaping () -> Void) {
         orderConfirmedButtonListener = completion
     }
 
-    func subscribeToViewStateListener(with completion: @escaping BasketViewStateBlock) {
+    func viewStateListener(with completion: @escaping BasketViewStateBlock) {
         basketViewState = completion
     }
 
-    func getCollectionViewData() -> BasketCollectionViewData {
-        let data = BasketCollectionViewData(totalLabelText: getBasketTotal())
+    func getCollectionViewData() -> BasketViewData {
+        let data = BasketViewData(totalLabelText: getBasketTotal())
             .setTitleViewData(by: getBasketCellArray())
             .setbuyNowButtonAction(by: buyNowButtonPressed)
         basketViewState?(.done)
@@ -43,23 +43,23 @@ final class BasketViewModel: BasketViewModelProtocol {
     }
 
     private func getBasketCellArray() -> [BasketCellDisplayerData] {
-        let list = shoppingListDataManager.returnItemsFromCoreData().map({ BasketCellDisplayerData(product: $0) })
-        let itemsInBasket = list.filter({ ($0.product.productCount ?? 0) > 0 })
-        return itemsInBasket
+        let list = shoppingListDataManager.getBasketItems()
+        return list.compactMap({ BasketCellDisplayerData(product: $0) })
     }
 
     lazy var buyNowButtonPressed: () -> Void = { [weak self] in
-        print("SIPARIS ALINDI")
         guard let self = self else { return }
         self.orderConfirmedButtonListener?()
+        self.shoppingListDataManager.removeAllOrders()
+        self.basketViewState?(.loading)
     }
 
-    func showOrderConfirmedAlert() -> Alert {
+    func showOrderConfirmedAlert(action: @escaping () -> Void) -> Alert {
             Alert(title: "Siparisiniz onaylandi!",
                   message: getBasketTotal(),
                   actions: [AlertAction(title: "Tamam",
                                         style: .default,
-                                        action: .none)],
+                                        action: action())],
                   style: .alert)
     }
 

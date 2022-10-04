@@ -13,9 +13,9 @@ typealias HomeViewStateBlock = (HomeViewState) -> Void
 protocol HomeViewModelProtocol: HomeDataProviderProtocol {
     var coordinator: HomeViewCoordinatorProtocol? { get }
     func getData()
-    func subscribeHomeViewState(with completion: @escaping HomeViewStateBlock)
+    func homeViewStateListener(with completion: @escaping HomeViewStateBlock)
     func subscribeNetworkState()
-    func navigateToBasket()
+    func navigateToBasket(with completion: @escaping () -> Void) 
 }
 
 final class HomeViewModel: HomeViewModelProtocol {
@@ -55,12 +55,16 @@ final class HomeViewModel: HomeViewModelProtocol {
         }
     }
 
-    func subscribeHomeViewState(with completion: @escaping HomeViewStateBlock) {
+    func homeViewStateListener(with completion: @escaping HomeViewStateBlock) {
         homeViewState = completion
     }
 
-    func navigateToBasket() {
-        coordinator?.navigateToBasketView()
+    func navigateToBasket(with completion: @escaping () -> Void) {
+        if dataFormatter.getBasketItemCount() > 0 {
+            coordinator?.navigateToBasketView()
+        } else {
+            completion()
+        }
     }
 
     private func apiCall(with urlRequest: URLRequest, completion: @escaping (Result<ProductResponse, Error>) -> Void) {
@@ -70,11 +74,9 @@ final class HomeViewModel: HomeViewModelProtocol {
     private lazy var dataListener: (Result<ProductResponse, Error>) -> Void = { [weak self] result in
         switch result {
         case .failure(let error):
-            print("Error data listener: \(error)")
-            self?.homeViewState?(.error(Alert.buildDefaultAlert(message: "", doneTitle: "", action: self?.retryAction(), cancelAction: nil)))
+            self?.homeViewState?(.error)
             self?.dataResponseHandler(from: self?.dataFormatter.getItemsFromDisk())
         case .success(let response):
-            print("data: \(response)")
             self?.dataFormatter.saveItems(from: response)
             self?.dataResponseHandler(from: self?.dataFormatter.getItemsFromDisk())
         }
@@ -86,7 +88,7 @@ final class HomeViewModel: HomeViewModelProtocol {
 
     private func dataResponseHandler(from response: ProductResponse?) {
         guard let response = response else {
-            homeViewState?(.error(Alert.buildDefaultAlert(message: "", doneTitle: "", action: nil, cancelAction: nil)))
+            homeViewState?(.error)
             return
         }
         dataFormatter.setData(with: response)
@@ -120,5 +122,5 @@ extension HomeViewModel: HomeDataProviderProtocol {
 enum HomeViewState {
     case loading
     case done
-    case error(Alert)
+    case error
 }

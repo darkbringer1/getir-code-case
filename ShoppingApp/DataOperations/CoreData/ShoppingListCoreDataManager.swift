@@ -13,6 +13,8 @@ protocol ShoppingListCoreDataProtocol {
     func updateEntity(shoppingItem: Product)
     func returnItemsFromCoreData() -> ProductResponse
     func deleteItems()
+    func removeAllOrders()
+    func getBasketItems() -> [Product]
 }
 
 final class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
@@ -40,8 +42,9 @@ final class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
     func updateEntity(shoppingItem: Product) {
         fetchCartList()
         if checkCartListProductExist(product: shoppingItem) {
-            
-            if let object = coreDataManager.fetchWithPredicate(ShoppingListEntity.self, predicateKey: "productImage", predicateValue: shoppingItem.productImage) {
+            if let object = coreDataManager.fetchWithPredicate(ShoppingListEntity.self,
+                                                               predicateKey: "productImage",
+                                                               predicateValue: shoppingItem.productImage) {
                 object.productName = shoppingItem.productName
                 object.productImage = shoppingItem.productImage
                 object.productPrice = shoppingItem.productPrice
@@ -90,6 +93,16 @@ final class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
         }
     }
 
+    func removeAllOrders() {
+        let items = returnItemsFromCoreData()
+        items.forEach { product in
+            var item = product
+            item.productCount = 0
+            self.updateEntity(shoppingItem: item)
+        }
+        fetchCartList()
+    }
+
     private func checkCartListProductExist(product: Product) -> Bool {
         listEntities.contains { (entity) -> Bool in
             if entity.productImage == product.productImage {
@@ -105,7 +118,7 @@ final class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
         listEntities = coreDataManager.fetch(ShoppingListEntity.self)
     }
 
-    deinit {
-        print("DEINIT ShoppingListCoreDataManager")
+    func getBasketItems() -> [Product] {
+        return returnItemsFromCoreData().filter({ ($0.productCount ?? 0) > 0 })
     }
 }

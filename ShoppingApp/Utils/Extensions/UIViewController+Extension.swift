@@ -16,6 +16,14 @@ extension UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
 
+    func addRightBarButton(imageSystemName: String, tapGesture: @escaping () -> Void) {
+        let rightButtonView = UIButton(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
+        rightButtonView.setImage(UIImage(systemName: imageSystemName), for: .normal)
+        rightButtonView.addAction(tapGesture)
+        rightButtonView.tintColor = .systemMint
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButtonView)
+    }
+
     func popViewController() {
         self.navigationController?.popViewController(animated: true)
     }
