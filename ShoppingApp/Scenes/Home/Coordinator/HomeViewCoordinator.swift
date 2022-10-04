@@ -8,7 +8,7 @@
 import UIKit
 
 protocol HomeViewCoordinatorProtocol {
-    func navigateToDetailView(with item: Product)
+    func navigateToDetailView(with item: Product, newItemAdded: NewItemAddBlock?)
     func navigateToBasketView()
 }
 
@@ -27,8 +27,8 @@ class HomeViewCoordinator: CoordinatorProtocol, HomeViewCoordinatorProtocol {
         homeVC.title = "Alisveris"
     }
 
-    func navigateToDetailView(with item: Product) {
-        let detailVC = homeFactory.createDetailView(coordinator: self, product: item)
+    func navigateToDetailView(with item: Product, newItemAdded: NewItemAddBlock?) {
+        let detailVC = homeFactory.createDetailView(coordinator: self, product: item, newItemAdded: newItemAdded)
         rootViewController.pushViewController(detailVC, animated: true)
         let navigationTitle = UILabel()
         navigationTitle.text = "\(item.productName)"

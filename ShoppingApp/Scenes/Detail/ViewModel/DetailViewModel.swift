@@ -8,7 +8,7 @@
 import Foundation
 typealias DetailDataState = (Product) -> Void
 typealias DetailDataChangeBlock = (DetailChangeState) -> Void
-
+typealias NewItemAddBlock = (Bool) -> Void
 protocol DetailViewModelProtocol {
     func getProductData()
     func subscribeDetailDataState(with completion: @escaping DetailDataState)
@@ -22,12 +22,18 @@ class DetailViewModel: DetailViewModelProtocol {
     var productData: Product
     var dataState: DetailDataState?
     var detailDataChange: DetailDataChangeBlock?
+    var newItemChangeState: NewItemAddBlock?
+    private var coreDataManager = CoreDataManager.shared
+    private var shoppingListDataManager: ShoppingListCoreDataManager
 
-    init(productData: Product) {
+
+    init(productData: Product, newItemAdded: NewItemAddBlock?) {
         self.productData = productData
+        self.shoppingListDataManager = ShoppingListCoreDataManager(coreDataManager: coreDataManager)
         if self.productData.productCount == nil {
             self.productData.productCount = 0
         }
+        self.newItemChangeState = newItemAdded
     }
 
     func getProductData() {
@@ -52,13 +58,13 @@ class DetailViewModel: DetailViewModelProtocol {
         return detailData
     }
 
-    lazy var plusButtonHandler: () -> Void = {
+    private lazy var plusButtonHandler: () -> Void = {
         print("Add button pressed")
         self.productData.productCount? += Int16(1)
         self.detailDataChange?(.dataChanged)
     }
 
-    lazy var minusButtonHandler: () -> Void = {
+    private lazy var minusButtonHandler: () -> Void = {
         print("Substract button pressed")
         if self.productData.productCount ?? 0 > 0 {
             self.productData.productCount? -= Int16(1)
@@ -66,8 +72,10 @@ class DetailViewModel: DetailViewModelProtocol {
         self.detailDataChange?(.dataChanged)
     }
 
-    lazy var addToShoppingListHandler: () -> Void = {
+    private lazy var addToShoppingListHandler: () -> Void = {
         print("Add to shopping list tapped")
+        self.shoppingListDataManager.updateEntity(shoppingItem: self.productData)
+        self.newItemChangeState?(true)
     }
 
     private func getProductFooterData() -> ProductFooterData {

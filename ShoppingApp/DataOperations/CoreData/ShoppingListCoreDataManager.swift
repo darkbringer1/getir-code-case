@@ -38,10 +38,23 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
     func updateEntity(shoppingItem: Product) {
         fetchCartList()
         if checkCartListProductExist(product: shoppingItem) {
-            let context = ShoppingListEntity(context: coreDataManager.context)
-            coreDataManager.delete(context)
+            
+            if let ob = coreDataManager.fetchWithPredicate(ShoppingListEntity.self, predicateKey: "productImage", predicateValue: shoppingItem.productImage) {
+                ob.productName = shoppingItem.productName
+                ob.productImage = shoppingItem.productImage
+                ob.productPrice = shoppingItem.productPrice
+                ob.productDescription = shoppingItem.productDescription
+
+                if let productId = shoppingItem.productId {
+                    ob.productId = productId
+                }
+                if let productCount = shoppingItem.productCount {
+                    ob.productCount = productCount
+                }
+            }
+            coreDataManager.saveContext()
         }
-        saveToCoreData(cartList: [shoppingItem])
+        fetchCartList()
     }
 
     func saveToCoreData(cartList: Array<Product>) {
@@ -56,6 +69,7 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
                 object.productName = product.productName
                 object.productImage = product.productImage
                 object.productPrice = product.productPrice
+                object.productDescription = product.productDescription
 
                 if let productId = product.productId {
                     object.productId = productId
@@ -63,10 +77,15 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
                 if let productCount = product.productCount {
                     object.productCount = productCount
                 }
-
-
                 coreDataManager.saveContext()
             }
+        }
+    }
+
+    func deleteItems() {
+        fetchCartList()
+        listEntities.forEach { item in
+            coreDataManager.context.delete(item)
         }
     }
 

@@ -50,7 +50,7 @@ class HomeViewModel: HomeViewModelProtocol {
                 self?.getData()
             case .offline:
                 // MARK: - get items from core data if any
-                self?.apiCallHandler(from: self?.dataFormatter.getItemsFromDisk())
+                self?.dataResponseHandler(from: self?.dataFormatter.getItemsFromDisk())
             }
         }
     }
@@ -62,6 +62,7 @@ class HomeViewModel: HomeViewModelProtocol {
     func navigateToBasket() {
         coordinator?.navigateToBasketView()
     }
+
     private func apiCall(with urlRequest: URLRequest, completion: @escaping (Result<ProductResponse, Error>) -> Void) {
         APIManager.shared.executeRequest(urlRequest: urlRequest, completion: completion)
     }
@@ -71,15 +72,15 @@ class HomeViewModel: HomeViewModelProtocol {
         case .failure(let error):
             print("Error data listener: \(error)")
             self?.homeViewState?(.error)
-            self?.apiCallHandler(from: self?.dataFormatter.getItemsFromDisk())
+            self?.dataResponseHandler(from: self?.dataFormatter.getItemsFromDisk())
         case .success(let response):
             print("data: \(response)")
             self?.dataFormatter.saveItems(from: response)
-            self?.apiCallHandler(from: response)
+            self?.dataResponseHandler(from: self?.dataFormatter.getItemsFromDisk())
         }
     }
 
-    private func apiCallHandler(from response: ProductResponse?) {
+    private func dataResponseHandler(from response: ProductResponse?) {
         guard let response = response else {
             homeViewState?(.error)
             return
@@ -101,12 +102,17 @@ extension HomeViewModel: DataProviderProtocol {
 
     func selectedItem(at index: Int) {
         guard let product = dataFormatter.getItem(at: index) else { return }
-        coordinator?.navigateToDetailView(with: product)
+        coordinator?.navigateToDetailView(with: product) { [self] state in
+            switch state {
+            case true:
+                homeViewState?(.loading)
+                dataResponseHandler(from: dataFormatter.getItemsFromDisk())
+                homeViewState?(.done)
+            case false:
+                break
+            }
+        }
     }
-}
-
-// MARK: - CoreDataOps
-extension HomeViewModel {
 }
 
 enum HomeViewState {

@@ -33,7 +33,8 @@ class HomeDataFormatter: HomeDataFormatterProtocol {
     }
 
     func getItem(at index: Int) -> Product? {
-        data?[index]
+        let items = getItemsFromDisk()
+        return items[index]
     }
 
     func askData(at index: Int) -> GenericDataProtocol? {
