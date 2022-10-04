@@ -14,5 +14,5 @@ struct Product: Codable {
     var productPrice: Double
     var productImage: String
     var productId: String?
-    var productCount: Int16
+    var productCount: Int16?
 }

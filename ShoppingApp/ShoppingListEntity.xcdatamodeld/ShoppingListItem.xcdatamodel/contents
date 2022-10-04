@@ -9,6 +9,6 @@
         <attribute name="productPrice" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="ShoppingListEntity" positionX="-63" positionY="-18" width="128" height="14"/>
+        <element name="ShoppingListEntity" positionX="-63" positionY="-18" width="128" height="119"/>
     </elements>
 </model>

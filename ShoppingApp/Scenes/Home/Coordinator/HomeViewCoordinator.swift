@@ -8,10 +8,11 @@
 import UIKit
 
 protocol HomeViewCoordinatorProtocol {
-    func navigateToDetailView(with item: Product)
+    func navigateToDetailView(with item: Product, addToBasket: @escaping AddToBasketStateBlock)
+    func navigateToBasketView()
 }
 
-class HomeViewCoordinator: CoordinatorProtocol, HomeViewCoordinatorProtocol {
+final class HomeViewCoordinator: CoordinatorProtocol, HomeViewCoordinatorProtocol {
 
     private(set) var rootViewController: UINavigationController!
     private let homeFactory: HomeFactory
@@ -26,8 +27,8 @@ class HomeViewCoordinator: CoordinatorProtocol, HomeViewCoordinatorProtocol {
         homeVC.title = "Alisveris"
     }
 
-    func navigateToDetailView(with item: Product) {
-        let detailVC = homeFactory.createDetailView(coordinator: self, product: item)
+    func navigateToDetailView(with item: Product, addToBasket: @escaping AddToBasketStateBlock) {
+        let detailVC = homeFactory.createDetailView(coordinator: self, product: item, addToBasket: addToBasket)
         rootViewController.pushViewController(detailVC, animated: true)
         let navigationTitle = UILabel()
         navigationTitle.text = "\(item.productName)"
@@ -35,5 +36,15 @@ class HomeViewCoordinator: CoordinatorProtocol, HomeViewCoordinatorProtocol {
         navigationTitle.textAlignment = .center
         navigationTitle.font = .systemFont(ofSize: 16, weight: .medium)
         detailVC.navigationItem.titleView = navigationTitle
+    }
+
+    func navigateToBasketView() {
+        let basketVC = homeFactory.goToBasketView(coordinator: self)
+        rootViewController.pushViewController(basketVC, animated: true)
+        let navigationTitle = UILabel()
+        navigationTitle.text = "Sepetim"
+        navigationTitle.textAlignment = .center
+        navigationTitle.font = .systemFont(ofSize: 16, weight: .medium)
+        basketVC.navigationItem.titleView = navigationTitle
     }
 }

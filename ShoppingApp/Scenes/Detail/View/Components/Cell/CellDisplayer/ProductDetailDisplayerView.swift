@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductDetailDisplayerView: GenericBaseView<ProductDetailDisplayerData> {
+final class ProductDetailDisplayerView: GenericBaseView<ProductDetailDisplayerData> {
 
     private lazy var containerView: UIView = {
         let view = UIView()

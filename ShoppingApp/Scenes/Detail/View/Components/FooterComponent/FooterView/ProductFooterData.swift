@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ProductFooterData {
+final class ProductFooterData {
     typealias VoidHandler = () -> Void
     private(set) var title: String = " "
     private(set) var count: Int = 0

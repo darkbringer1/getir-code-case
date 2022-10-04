@@ -7,6 +7,6 @@
 
 import Foundation
 
-class ProductHeaderReusableView: GenericCollectionViewCell<ProductHeaderData, ProductHeaderView> {
+final class ProductHeaderReusableView: GenericCollectionViewCell<ProductHeaderData, ProductHeaderView> {
 
 }

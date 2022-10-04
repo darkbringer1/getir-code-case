@@ -10,14 +10,15 @@ import NetworkLayer
 
 typealias HomeViewStateBlock = (HomeViewState) -> Void
 
-protocol HomeViewModelProtocol: DataProviderProtocol {
+protocol HomeViewModelProtocol: HomeDataProviderProtocol {
     var coordinator: HomeViewCoordinatorProtocol? { get }
     func getData()
     func subscribeHomeViewState(with completion: @escaping HomeViewStateBlock)
     func subscribeNetworkState()
+    func navigateToBasket()
 }
 
-class HomeViewModel: HomeViewModelProtocol {
+final class HomeViewModel: HomeViewModelProtocol {
     var coordinator: HomeViewCoordinatorProtocol?
     var dataFormatter: HomeDataFormatterProtocol
 
@@ -49,13 +50,17 @@ class HomeViewModel: HomeViewModelProtocol {
                 self?.getData()
             case .offline:
                 // MARK: - get items from core data if any
-                self?.apiCallHandler(from: self?.dataFormatter.getItemsFromDisk())
+                self?.dataResponseHandler(from: self?.dataFormatter.getItemsFromDisk())
             }
         }
     }
 
     func subscribeHomeViewState(with completion: @escaping HomeViewStateBlock) {
         homeViewState = completion
+    }
+
+    func navigateToBasket() {
+        coordinator?.navigateToBasketView()
     }
 
     private func apiCall(with urlRequest: URLRequest, completion: @escaping (Result<ProductResponse, Error>) -> Void) {
@@ -66,18 +71,22 @@ class HomeViewModel: HomeViewModelProtocol {
         switch result {
         case .failure(let error):
             print("Error data listener: \(error)")
-            self?.homeViewState?(.error)
-            self?.apiCallHandler(from: self?.dataFormatter.getItemsFromDisk())
+            self?.homeViewState?(.error(Alert.buildDefaultAlert(message: "", doneTitle: "", action: self?.retryAction(), cancelAction: nil)))
+            self?.dataResponseHandler(from: self?.dataFormatter.getItemsFromDisk())
         case .success(let response):
             print("data: \(response)")
             self?.dataFormatter.saveItems(from: response)
-            self?.apiCallHandler(from: response)
+            self?.dataResponseHandler(from: self?.dataFormatter.getItemsFromDisk())
         }
     }
 
-    private func apiCallHandler(from response: ProductResponse?) {
+    private lazy var retryAction: () -> Void = {
+        self.getData()
+    }
+
+    private func dataResponseHandler(from response: ProductResponse?) {
         guard let response = response else {
-            homeViewState?(.error)
+            homeViewState?(.error(Alert.buildDefaultAlert(message: "", doneTitle: "", action: nil, cancelAction: nil)))
             return
         }
         dataFormatter.setData(with: response)
@@ -86,7 +95,7 @@ class HomeViewModel: HomeViewModelProtocol {
 }
 
 // MARK: - CV Data Provider
-extension HomeViewModel: DataProviderProtocol {
+extension HomeViewModel: HomeDataProviderProtocol {
     func askNumberOfItem(in section: Int) -> Int {
         dataFormatter.getNumberOfItems(in: section) ?? 0
     }
@@ -97,16 +106,19 @@ extension HomeViewModel: DataProviderProtocol {
 
     func selectedItem(at index: Int) {
         guard let product = dataFormatter.getItem(at: index) else { return }
-        coordinator?.navigateToDetailView(with: product)
+        coordinator?.navigateToDetailView(with: product) { state in
+            switch state {
+            case true:
+                self.homeViewState?(.loading)
+            case false:
+                self.homeViewState?(.done)
+            }
+        }
     }
-}
-
-// MARK: - CoreDataOps
-extension HomeViewModel {
 }
 
 enum HomeViewState {
     case loading
     case done
-    case error
+    case error(Alert)
 }

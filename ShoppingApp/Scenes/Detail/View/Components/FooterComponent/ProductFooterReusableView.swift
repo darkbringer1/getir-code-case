@@ -7,6 +7,6 @@
 
 import UIKit
 
-class ProductFooterReusableView: GenericCollectionViewCell<ProductFooterData, ProductFooterView> {
+final class ProductFooterReusableView: GenericCollectionViewCell<ProductFooterData, ProductFooterView> {
 
 }

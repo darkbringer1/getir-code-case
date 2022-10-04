@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CustomImageViewContainer: GenericBaseView<CustomImageViewData> {
+final class CustomImageViewContainer: GenericBaseView<CustomImageViewData> {
 
     private lazy var customImageView: CustomImageViewComponent = {
         let temp = CustomImageViewComponent()

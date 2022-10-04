@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductFooterView: GenericBaseView<ProductFooterData> {
+final class ProductFooterView: GenericBaseView<ProductFooterData> {
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -98,6 +98,7 @@ class ProductFooterView: GenericBaseView<ProductFooterData> {
         temp.layer.borderWidth = 2
         return temp
     }()
+    
     override func setupViews() {
         super.setupViews()
         addComponents()

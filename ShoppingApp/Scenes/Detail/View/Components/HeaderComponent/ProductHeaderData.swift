@@ -6,12 +6,11 @@
 //
 
 import Foundation
-class ProductHeaderData {
 
+final class ProductHeaderData {
     private(set) var imageUrl: String
 
     init(imageUrl: String) {
         self.imageUrl = imageUrl
     }
-
 }

@@ -8,33 +8,48 @@
 import Foundation
 typealias DetailDataState = (Product) -> Void
 typealias DetailDataChangeBlock = (DetailChangeState) -> Void
+typealias AddToBasketStateBlock = (Bool) -> Void
 
 protocol DetailViewModelProtocol {
     func getProductData()
-    func subscribeDetailDataState(with completion: @escaping DetailDataState)
+    func detailDataState(with completion: @escaping DetailDataState)
     func formatData() -> ProductDetailViewData
-    func subscribeDetailDataChangeListener(with completion: @escaping DetailDataChangeBlock)
-
+    func detailDataChangeListener(with completion: @escaping DetailDataChangeBlock)
+    func addToBasketListener(with completion: @escaping AddToBasketStateBlock)
+    func showAddedToBasketAlert() -> Alert
 }
 
-class DetailViewModel: DetailViewModelProtocol {
+final class DetailViewModel: DetailViewModelProtocol {
     var coordinator: HomeViewCoordinatorProtocol?
     var productData: Product
     var dataState: DetailDataState?
     var detailDataChange: DetailDataChangeBlock?
+    var addToBasketState: AddToBasketStateBlock?
+    private var coreDataManager = CoreDataManager.shared
+    private var shoppingListDataManager: ShoppingListCoreDataManager
 
-    init(productData: Product) {
+
+    init(productData: Product, addToBasket: @escaping AddToBasketStateBlock) {
         self.productData = productData
+        self.shoppingListDataManager = ShoppingListCoreDataManager()
+        if self.productData.productCount == nil {
+            self.productData.productCount = 0
+        }
     }
 
     func getProductData() {
         dataState?(productData)
     }
 
-    func subscribeDetailDataState(with completion: @escaping DetailDataState) {
+    func addToBasketListener(with completion: @escaping AddToBasketStateBlock) {
+        addToBasketState = completion
+    }
+
+    func detailDataState(with completion: @escaping DetailDataState) {
         dataState = completion
     }
-    func subscribeDetailDataChangeListener(with completion: @escaping DetailDataChangeBlock) {
+    
+    func detailDataChangeListener(with completion: @escaping DetailDataChangeBlock) {
         detailDataChange = completion
     }
 
@@ -48,22 +63,24 @@ class DetailViewModel: DetailViewModelProtocol {
         return detailData
     }
 
-    lazy var plusButtonHandler: () -> Void = {
+    private lazy var plusButtonHandler: () -> Void = { [weak self] in
         print("Add button pressed")
-        self.productData.productCount += Int16(1)
-        self.detailDataChange?(.dataChanged)
+        self?.productData.productCount? += Int16(1)
+        self?.detailDataChange?(.dataChanged)
     }
 
-    lazy var minusButtonHandler: () -> Void = {
+    private lazy var minusButtonHandler: () -> Void = { [weak self] in
         print("Substract button pressed")
-        if self.productData.productCount > 0 {
-            self.productData.productCount -= Int16(1)
+        if self?.productData.productCount ?? 0 > 0 {
+            self?.productData.productCount? -= Int16(1)
         }
-        self.detailDataChange?(.dataChanged)
+        self?.detailDataChange?(.dataChanged)
     }
 
-    lazy var addToShoppingListHandler: () -> Void = {
+    private lazy var addToShoppingListHandler: () -> Void = { [weak self] in
         print("Add to shopping list tapped")
+        self?.updateProduct()
+        self?.addToBasketState?(true)
     }
 
     private func getProductFooterData() -> ProductFooterData {
@@ -71,7 +88,20 @@ class DetailViewModel: DetailViewModelProtocol {
             .setPlusButtonAction(by: plusButtonHandler)
             .setMinusButtonAction(by: minusButtonHandler)
             .setAddToShoppingListAction(by: addToShoppingListHandler)
-            .setCountData(by: Int(productData.productCount))
+            .setCountData(by: Int(productData.productCount ?? 0))
+    }
+
+    func showAddedToBasketAlert() -> Alert {
+        Alert(title: "Urun sepete eklendi",
+              message: "",
+              actions: [AlertAction(title: "Tamam",
+                                    style: .default,
+                                    action: .none)],
+              style: .alert)
+    }
+
+    private func updateProduct() {
+        shoppingListDataManager.updateEntity(shoppingItem: productData)
     }
 }
 

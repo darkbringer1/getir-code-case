@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class CoreDataManager {
+final class CoreDataManager {
 
     public static let shared = CoreDataManager()
 
@@ -77,7 +77,7 @@ class CoreDataManager {
     func fetchWithPredicate<T: NSManagedObject>(_ type: T.Type, predicateKey: String, predicateValue: String) -> T? {
         do {
             let fetchRequest = T.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: predicateKey, predicateValue)
+            fetchRequest.predicate = NSPredicate(format: "\(predicateKey) = '\(predicateValue)'")
 
             if let fetchedObjects = try context.fetch(fetchRequest) as? [T] {
                 return fetchedObjects.getElement(at: 0) ?? nil

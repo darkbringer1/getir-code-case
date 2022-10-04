@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductHeaderFlowLayout: UICollectionViewFlowLayout {
+final class ProductHeaderFlowLayout: UICollectionViewFlowLayout {
 
     // we want to modify the attributes of our header component somehow
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {

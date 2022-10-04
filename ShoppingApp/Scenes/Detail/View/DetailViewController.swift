@@ -7,11 +7,9 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController, ErrorHandlingProtocol {
     var viewModel: DetailViewModelProtocol!
     private var detailComponent: ProductDetailView!
-    var productCount: Int = 0
-    var productFooterData: ProductFooterData!
 
     convenience init(viewModel: DetailViewModelProtocol) {
         self.init()
@@ -20,9 +18,9 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemMint
         addMainComponent()
         subscribeViewModelListeners()
+        configureNavigationBar()
     }
 
     private func addMainComponent() {
@@ -39,10 +37,18 @@ class DetailViewController: UIViewController {
     }
 
     private func subscribeViewModelListeners() {
-        viewModel.subscribeDetailDataState { product in
+        viewModel.addToBasketListener { state in
+            switch state {
+            case true:
+                self.showAlert(with: self.viewModel.showAddedToBasketAlert())
+            case false:
+                break
+            }
+        }
+        viewModel.detailDataState { product in
             self.detailComponent.set(data: self.viewModel.formatData())
         }
-        viewModel.subscribeDetailDataChangeListener { state in
+        viewModel.detailDataChangeListener { state in
             switch state {
             case .dataChanged:
                 self.detailComponent.set(data: self.viewModel.formatData())
@@ -52,5 +58,11 @@ class DetailViewController: UIViewController {
             }
         }
         viewModel.getProductData()
+    }
+
+    private func configureNavigationBar() {
+        addDefaultBackBarButton { [weak self] in
+            self?.popViewController()
+        }
     }
 }

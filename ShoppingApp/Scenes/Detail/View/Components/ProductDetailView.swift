@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductDetailView: GenericBaseView<ProductDetailViewData> {
+final class ProductDetailView: GenericBaseView<ProductDetailViewData> {
     private lazy var collectionView: UICollectionView = {
         let layout = ProductHeaderFlowLayout()
         layout.sectionInset = .init(top: 16, left: 16, bottom: 16, right: 16)
@@ -88,8 +88,9 @@ extension ProductDetailView: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.width, height: 340)
     }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width, height: 120)
+        return CGSize(width: UIScreen.main.bounds.width, height: 116)
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

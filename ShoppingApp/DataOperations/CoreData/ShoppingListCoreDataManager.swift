@@ -8,17 +8,19 @@
 import Foundation
 
 protocol ShoppingListCoreDataProtocol {
+    var coreDataManager: CoreDataManager { get set }
     func saveToCoreData(cartList: Array<Product>)
     func updateEntity(shoppingItem: Product)
+    func returnItemsFromCoreData() -> ProductResponse
+    func deleteItems()
 }
 
-class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
-
-    private var coreDataManager: CoreDataManager!
+final class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
+    var coreDataManager: CoreDataManager
     private var listEntities = Array<ShoppingListEntity>()
 
-    init(coreDataManager: CoreDataManager) {
-        self.coreDataManager = coreDataManager
+    init() {
+        self.coreDataManager = CoreDataManager.shared
     }
 
 
@@ -38,16 +40,28 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
     func updateEntity(shoppingItem: Product) {
         fetchCartList()
         if checkCartListProductExist(product: shoppingItem) {
-            let context = ShoppingListEntity(context: coreDataManager.context)
-            coreDataManager.delete(context)
+            
+            if let object = coreDataManager.fetchWithPredicate(ShoppingListEntity.self, predicateKey: "productImage", predicateValue: shoppingItem.productImage) {
+                object.productName = shoppingItem.productName
+                object.productImage = shoppingItem.productImage
+                object.productPrice = shoppingItem.productPrice
+                object.productDescription = shoppingItem.productDescription
+
+                if let productId = shoppingItem.productId {
+                    object.productId = productId
+                }
+                if let productCount = shoppingItem.productCount {
+                    object.productCount = productCount
+                }
+            }
+            coreDataManager.saveContext()
         }
-        saveToCoreData(cartList: [shoppingItem])
+        fetchCartList()
     }
 
     func saveToCoreData(cartList: Array<Product>) {
 
         fetchCartList()
-
         cartList.forEach { (product) in
 
             if !checkCartListProductExist(product: product) {
@@ -56,15 +70,23 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
                 object.productName = product.productName
                 object.productImage = product.productImage
                 object.productPrice = product.productPrice
+                object.productDescription = product.productDescription
 
                 if let productId = product.productId {
                     object.productId = productId
                 }
-
-                object.productCount = product.productCount
-
+                if let productCount = product.productCount {
+                    object.productCount = productCount
+                }
                 coreDataManager.saveContext()
             }
+        }
+    }
+
+    func deleteItems() {
+        fetchCartList()
+        listEntities.forEach { item in
+            coreDataManager.context.delete(item)
         }
     }
 
@@ -84,6 +106,6 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
     }
 
     deinit {
-        print("DEINIT CartOperationsCoreDataManager")
+        print("DEINIT ShoppingListCoreDataManager")
     }
 }

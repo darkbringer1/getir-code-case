@@ -12,7 +12,7 @@ enum CustomImageLoadingType {
     case disk
 }
 
-class CustomImageViewComponent: UIImageView {
+final class CustomImageViewComponent: UIImageView {
 
     private var imageUrlString: String?
 
