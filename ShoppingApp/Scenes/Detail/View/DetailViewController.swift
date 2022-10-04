@@ -37,7 +37,8 @@ final class DetailViewController: UIViewController, ErrorHandlingProtocol {
     }
 
     private func subscribeViewModelListeners() {
-        viewModel.addToBasketListener { state in
+        viewModel.addToBasketListener { [weak self] state in
+            guard let self = self else { return }
             switch state {
             case true:
                 self.showAlert(with: self.viewModel.showAddedToBasketAlert())
@@ -45,14 +46,14 @@ final class DetailViewController: UIViewController, ErrorHandlingProtocol {
                 break
             }
         }
-        viewModel.detailDataState { product in
-            self.detailComponent.set(data: self.viewModel.formatData())
+        viewModel.detailDataState { [weak self] product in
+            self?.detailComponent.set(data: self?.viewModel.formatData())
         }
-        viewModel.detailDataChangeListener { state in
+        viewModel.detailDataChangeListener { [weak self] state in
             switch state {
             case .dataChanged:
-                self.detailComponent.set(data: self.viewModel.formatData())
-                self.detailComponent.reloadCollectionView()
+                self?.detailComponent.set(data: self?.viewModel.formatData())
+                self?.detailComponent.reloadCollectionView()
             case .dataStable:
                 break
             }

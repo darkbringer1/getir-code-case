@@ -1,5 +1,5 @@
 //
-//  BasketCollectionViewComponent.swift
+//  BasketViewComponent.swift
 //  ShoppingApp
 //
 //  Created by Dogukaan Kılıçarslan on 4.10.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BasketCollectionViewComponent: GenericBaseView<BasketCollectionViewData> {
+final class BasketViewComponent: GenericBaseView<BasketViewData> {
     var dataProvider: BasketDataProviderProtocol?
 
     private lazy var collectionView: UICollectionView = {
@@ -29,10 +29,15 @@ final class BasketCollectionViewComponent: GenericBaseView<BasketCollectionViewD
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 6
-        view.clipsToBounds = true
+        view.clipsToBounds = false
         view.backgroundColor = .systemMint
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.9
+        view.layer.shadowRadius = 15
+        view.layer.shadowOffset = CGSize(width: 10, height: 10)
         return view
     }()
+
     private lazy var bottomStackView: UIStackView = {
         let temp = UIStackView(arrangedSubviews: [totalLabel, buyNowButton])
         temp.translatesAutoresizingMaskIntoConstraints = false
@@ -126,7 +131,7 @@ final class BasketCollectionViewComponent: GenericBaseView<BasketCollectionViewD
     }
 }
 
-extension BasketCollectionViewComponent: UICollectionViewDelegate, UICollectionViewDataSource {
+extension BasketViewComponent: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         getNumberOfItems()
     }
@@ -142,7 +147,7 @@ extension BasketCollectionViewComponent: UICollectionViewDelegate, UICollectionV
     }
 }
 
-extension BasketCollectionViewComponent: UICollectionViewDelegateFlowLayout {
+extension BasketViewComponent: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (UIScreen.main.bounds.width - 40)
         let height = (UIScreen.main.bounds.height) / 5

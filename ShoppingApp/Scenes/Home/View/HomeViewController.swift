@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, ErrorHandlingProtocol {
     
     var viewModel: HomeViewModelProtocol!
     private var homeCVComponent: HomeCVComponent!
@@ -19,7 +19,7 @@ final class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
         addMainComponent()
         viewModelListeners()
         configureNavigationBar()
@@ -41,7 +41,7 @@ final class HomeViewController: UIViewController {
 
     func viewModelListeners() {
         viewModel.subscribeNetworkState()
-        viewModel.subscribeHomeViewState { [weak self] viewState in
+        viewModel.homeViewStateListener { [weak self] viewState in
             switch viewState {
             case .loading:
                 break
@@ -54,16 +54,15 @@ final class HomeViewController: UIViewController {
     }
 
     func configureNavigationBar() {
-        let rightButtonView = UIButton(frame: CGRect(x: 0, y: 0, width: 15, height: 15))
-        rightButtonView.setImage(UIImage(systemName: "cart"), for: .normal)
-        rightButtonView.addTarget(self, action: #selector(tap), for: .touchUpInside)
-        rightButtonView.tintColor = .systemMint
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButtonView)
-
-    }
-
-    @objc func tap() {
-        print("sepet")
-        viewModel.navigateToBasket()
+        addRightBarButton(imageSystemName: "cart") { [weak self] in
+            self?.viewModel.navigateToBasket {
+                self?.showAlert(with: Alert(title: "Sepetinizde hic urun bulunmamaktadir",
+                                      message: "",
+                                      actions: [AlertAction(title: "Tamam",
+                                                            style: .default,
+                                                            action: nil)],
+                                      style: .alert))
+            }
+        }
     }
 }

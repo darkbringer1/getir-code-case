@@ -19,7 +19,7 @@ final class HomeCVComponent: GenericBaseView<HomeCVData> {
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let coll = UICollectionView(frame: .zero, collectionViewLayout: layout)
         coll.translatesAutoresizingMaskIntoConstraints = false
-        coll.backgroundColor = .white
+        coll.backgroundColor = .clear
         coll.delegate = self
         coll.dataSource = self
         coll.register(HomeCVCell.self, forCellWithReuseIdentifier: HomeCVCell.identifier)

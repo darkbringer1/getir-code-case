@@ -1,5 +1,5 @@
 //
-//  BasketCollectionViewData.swift
+//  BasketViewData.swift
 //  ShoppingApp
 //
 //  Created by Dogukaan Kılıçarslan on 4.10.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class BasketCollectionViewData {
+final class BasketViewData {
     typealias VoidHandler = () -> Void
 
     private(set) var displayerData: [BasketCellDisplayerData] = [BasketCellDisplayerData]()

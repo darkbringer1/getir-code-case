@@ -25,6 +25,7 @@ final class HomeViewCoordinator: CoordinatorProtocol, HomeViewCoordinatorProtoco
         let homeVC = homeFactory.createHomeView(coordinator: self)
         rootViewController = UINavigationController(rootViewController: homeVC)
         homeVC.title = "Alisveris"
+        rootViewController.navigationBar.tintColor = .systemMint
     }
 
     func navigateToDetailView(with item: Product, addToBasket: @escaping AddToBasketStateBlock) {

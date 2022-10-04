@@ -13,6 +13,7 @@ protocol HomeDataFormatterProtocol {
     func askData(at index: Int) -> GenericDataProtocol?
     func saveItems(from products: [Product])
     func getItemsFromDisk() -> ProductResponse
+    func getBasketItemCount() -> Int
 }
 
 final class HomeDataFormatter: HomeDataFormatterProtocol {
@@ -50,5 +51,9 @@ final class HomeDataFormatter: HomeDataFormatterProtocol {
 
     func getItemsFromDisk() -> ProductResponse {
         shoppingListDataManager.returnItemsFromCoreData()
+    }
+
+    func getBasketItemCount() -> Int {
+        shoppingListDataManager.getBasketItems().count
     }
 }
