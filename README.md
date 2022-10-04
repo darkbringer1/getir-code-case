@@ -1,82 +1,49 @@
-# Shopping App
+# Shopping App Project
+This project developed by Dogukaan Kilicarslan
 
-### Deadline
+###### Tools used to develop this project:
+- Xcode Version 13.4.1 
+- Tested in iOS 15.5 simulator and 15.6.1 iPhone 6s Plus real device
 
-We'll be waiting for your solution within 5 days. 
+## Get Started
+The purpose of this project is to get various market items from a mock api and generate a template for a simple shopping app. UIKit and self made network package are preferred to develop this app.
 
-### Submission:
+Closures were heavily taken advantage of in this project but protocols are also used in different components.
 
-After completing the assignment, create a pull request to `main` branch.
-Then please send an email to the People Department with the link of the GitHub repo.
+### Architecture 
+MVVM-C pattern is used in this project. Focused on component based development with the protocol oriented programming to make the code cleaner and scalable.
 
-### Before Starting
+- Factory pattern is used to initializing in proper way.
+- Protocol oriented programming and dependency injections are used.
+- Prevented using singletons as much as possible.
+- View classes are abstracted from the view controllers to make it cleaner and reusable.
 
-Do not create any other private/public repositories other than this. You must perform all your development on this repository. 
+### Network Layer
 
-### Goal ###
+Since service calls do not require any authorization and there is only one service endpoint, a simple network layer constructed and added to project as a local Swift Package. 
 
-Develop a simple shopping app that allows the user to display products from the mock api response in a list and add/remove any of them to/from the cart. 
+I wanted to keep my network flow as linear as it's possible to make it suitable for SOLID's dependency inversion. High level objects shouldn't rely on the lower level objects.
 
-### Technical Requirements:
+### Coordinator Layer
 
-* Use Swift.
-* Feel free to use any architecture or design pattern.
-* Do not use any reactive paradigm (SwiftUI, RxSwift etc.)
-* UserDefaults or Singleton concepts could also be used for local storage on basket page.
-* You can build the user interface with XIBs || Storyboards || Code
-* Do not use any 3rd party libraries(other than Realm).
+This is a relatively small app with limited views. Coordinator layer was only constructed in HomeView since it is the root view controller and every view we want to reach we can use the HomeView's coordinator. 
 
-### Functional Requirements ###
+Furthermore an AppCoordinator could be added to further scalability and ease of navigation but for a small app it was not necessary. 
 
-* App must contain at least 3 different main features, including Product Listing, Product Detail, Shopping Cart.
+### UI decisions
 
-* Main Screen
-  * App must fetch and display the data from given mock API and it should be persisted locally.
-  * Persisted data and item counts should remain until successful checkout action.
-  * Users must be able to click product items in the list and route to "Details" screen.
-  * If the user have any product in the cart, the total amount should be displayed on the screen correctly.
-  * User must be able to route to the "Cart" Screen from "Main" screen, by clicking a button etc.
-  * After returning back from Details screen, all the changes made must be displayed correctly.
+Programmatic UI is preferred in this project to get more control over the UI components, lower the build time, keep the UI manipulation codes in one place and most importantly for ease of code review.
 
-* Details Screen
-  * The product's detailed image, name, price, description and current amount in the cart should be displayed correctly.
-  * User must be able to update the amount of the products in the cart and save it by clicking "Update Cart" button or a different approach, It's up to you.
+Every page in the app uses its own component files since there was no mutual components. Altough UI components could be dissected further and used independently but in its current state every component can be easily edited to make them reusable in different sections of the app.
 
-* Shopping Cart Screen
-  * User must be able to see all the items and individual counts in the cart as listed correctly.
-  * When user click's the "Checkout" button, a meaningful success message must be displayed at the screen.
-  * The success message must contain the total cart amount and display it correctly.
-  * After checkout action, all the local data should be reset (item counts in the cart must be zero)
-  * If any product item's count is zero, the item must not be displayed in the cart list
-  * User must not be able to route to the Cart Screen, if there is no item in the shopping cart.
+### Data operations
 
-### Mock API Url ###
+CoreData was used to persist the downloaded items. When an item is updated it is also updated in CoreData layer then displayed in BasketView according to their counts. All items are used from CoreData layer to lower the internet connection dependency. 
 
-https://mocki.io/v1/6bb59bbc-e757-4e71-9267-2fee84658ff2
+A network checker layer is developed to check if the internet connection is present. When internet connection is established, app tries to download and set the items to the CoreData layer. If internet connection is lost, app tries to get the items from CoreData layer. 
 
-### UI Suggestions ###
+### Summary
 
-It doesn't need to be super pretty, but it shouldn't be broken as well. The design is mostly up to you as long as all the features are available to use. You can follow or be inspired by the mock design below, it's up to you. 
+Overall, it was an excellent experience to have a chance to use CoreData this heavily. I always wanted to use CoreData but I never had the chance or need to use it. 
 
-![UI Mock](https://github.com/ios-getir/ShoppingApp/blob/main/screenshots/img_screenshot.png)
-
-### Expectations ###
-
-Consider this as a showcase of your skills.
-Approach it as if you are going to make a pull request on our main/master branch.
-
-We are expecting at least:
-* Project is compatible to Xcode 13.2.x
-* The code must compile.
-* The code must be production ready.
-* Keep code as clean as possible.
-* Your code should be easy to maintain
-* Do not try to build a fancy UI, your implementation details are more important
-* Consistency on code convention and indentation
-* Git usage.
-* A README.md which describes technical details/decisions
-
-Nice to have (Bonus Points):
-* At least one custom view
-* Tests (Unit | UI)
-* Modular Approach
+Although UI is not very complex, updating the UI with most interactions user makes was very challenging and there are still improvements that could be made in the project. 
