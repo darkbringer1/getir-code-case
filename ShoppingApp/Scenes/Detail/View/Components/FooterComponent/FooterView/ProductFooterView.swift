@@ -98,6 +98,7 @@ final class ProductFooterView: GenericBaseView<ProductFooterData> {
         temp.layer.borderWidth = 2
         return temp
     }()
+    
     override func setupViews() {
         super.setupViews()
         addComponents()

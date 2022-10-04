@@ -20,6 +20,7 @@ final class DetailViewController: UIViewController, ErrorHandlingProtocol {
         super.viewDidLoad()
         addMainComponent()
         subscribeViewModelListeners()
+        configureNavigationBar()
     }
 
     private func addMainComponent() {
@@ -39,7 +40,7 @@ final class DetailViewController: UIViewController, ErrorHandlingProtocol {
         viewModel.addToBasketListener { state in
             switch state {
             case true:
-                self.showAlert(with: Alert(title: "Urun sepete eklendi", message: "", actions: [AlertAction(title: "Tamam", style: .default, action: .none)], style: .alert))
+                self.showAlert(with: self.viewModel.showAddedToBasketAlert())
             case false:
                 break
             }
@@ -57,5 +58,11 @@ final class DetailViewController: UIViewController, ErrorHandlingProtocol {
             }
         }
         viewModel.getProductData()
+    }
+
+    private func configureNavigationBar() {
+        addDefaultBackBarButton { [weak self] in
+            self?.popViewController()
+        }
     }
 }

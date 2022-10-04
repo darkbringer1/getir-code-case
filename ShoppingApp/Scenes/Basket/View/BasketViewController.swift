@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BasketViewController: UIViewController {
+final class BasketViewController: UIViewController, ErrorHandlingProtocol {
     var viewModel: BasketViewModelProtocol!
     private var mainComponent: BasketCollectionViewComponent!
 
@@ -18,8 +18,10 @@ final class BasketViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         addMainComponent()
         subscribeToViewModelListeners()
+        configureNavigationBar()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,9 +51,17 @@ final class BasketViewController: UIViewController {
                 self?.mainComponent.set(data: self?.viewModel.getCollectionViewData())
             case .done:
                 self?.mainComponent.reloadCollectionView()
-            case .error:
-                break
             }
+        }
+        viewModel.subscribeOrderConfirmedListener { [weak self] in
+            guard let self = self else { return }
+            self.showAlert(with: self.viewModel.showOrderConfirmedAlert())
+        }
+    }
+
+    private func configureNavigationBar() {
+        addDefaultBackBarButton { [weak self] in
+            self?.popViewController()
         }
     }
 }

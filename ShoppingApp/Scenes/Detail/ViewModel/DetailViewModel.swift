@@ -16,6 +16,7 @@ protocol DetailViewModelProtocol {
     func formatData() -> ProductDetailViewData
     func detailDataChangeListener(with completion: @escaping DetailDataChangeBlock)
     func addToBasketListener(with completion: @escaping AddToBasketStateBlock)
+    func showAddedToBasketAlert() -> Alert
 }
 
 final class DetailViewModel: DetailViewModelProtocol {
@@ -78,8 +79,7 @@ final class DetailViewModel: DetailViewModelProtocol {
 
     private lazy var addToShoppingListHandler: () -> Void = { [weak self] in
         print("Add to shopping list tapped")
-        guard let productData = self?.productData else { return }
-        self?.shoppingListDataManager.updateEntity(shoppingItem: productData)
+        self?.updateProduct()
         self?.addToBasketState?(true)
     }
 
@@ -91,9 +91,17 @@ final class DetailViewModel: DetailViewModelProtocol {
             .setCountData(by: Int(productData.productCount ?? 0))
     }
 
-    deinit {
-        print("DEINIT DetailViewModel")
-        addToBasketState?(false)
+    func showAddedToBasketAlert() -> Alert {
+        Alert(title: "Urun sepete eklendi",
+              message: "",
+              actions: [AlertAction(title: "Tamam",
+                                    style: .default,
+                                    action: .none)],
+              style: .alert)
+    }
+
+    private func updateProduct() {
+        shoppingListDataManager.updateEntity(shoppingItem: productData)
     }
 }
 

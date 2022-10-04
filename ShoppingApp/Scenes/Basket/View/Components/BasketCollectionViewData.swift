@@ -8,10 +8,22 @@
 import Foundation
 
 final class BasketCollectionViewData {
+    typealias VoidHandler = () -> Void
+
     private(set) var displayerData: [BasketCellDisplayerData] = [BasketCellDisplayerData]()
+    private(set) var buyNowButtonAction: VoidHandler?
+    private(set) var totalLabelText: String
     
+    init(totalLabelText: String) {
+        self.totalLabelText = totalLabelText
+    }
     func setTitleViewData(by value: [BasketCellDisplayerData]) -> Self {
         displayerData = value
+        return self
+    }
+
+    func setbuyNowButtonAction(by value: VoidHandler?) -> Self {
+        buyNowButtonAction = value
         return self
     }
 }
