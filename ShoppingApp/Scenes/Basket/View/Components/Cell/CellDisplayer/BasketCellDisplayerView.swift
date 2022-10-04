@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BasketCellDisplayerView: GenericBaseView<BasketCellDisplayerData> {
+final class BasketCellDisplayerView: GenericBaseView<BasketCellDisplayerData> {
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

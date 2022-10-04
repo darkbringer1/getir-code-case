@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductHeaderView: GenericBaseView<ProductHeaderData> {
+final class ProductHeaderView: GenericBaseView<ProductHeaderData> {
 
     private lazy var imageContainer: CustomImageViewContainer = {
         let image = CustomImageViewContainer()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductFooterView: GenericBaseView<ProductFooterData> {
+final class ProductFooterView: GenericBaseView<ProductFooterData> {
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

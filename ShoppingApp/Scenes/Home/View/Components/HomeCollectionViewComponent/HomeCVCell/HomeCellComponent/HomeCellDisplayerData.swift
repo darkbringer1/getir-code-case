@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HomeCellDisplayerData: GenericDataProtocol {
+final class HomeCellDisplayerData: GenericDataProtocol {
     private(set) var productImageData: String
     private(set) var productName: String
     private(set) var productPrice: Double

@@ -10,7 +10,7 @@ import Network
 
 typealias NetworkListener = (NetworkStates) -> Void
 
-class NetworkCheckerManager {
+final class NetworkCheckerManager {
 
     public static let shared = NetworkCheckerManager()
 

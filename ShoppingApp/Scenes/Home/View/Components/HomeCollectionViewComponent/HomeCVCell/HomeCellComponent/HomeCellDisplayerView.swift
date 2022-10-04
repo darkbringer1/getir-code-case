@@ -7,8 +7,7 @@
 
 import UIKit
 
-class HomeCellDisplayerView: GenericBaseView<GenericDataProtocol> {
-
+final class HomeCellDisplayerView: GenericBaseView<GenericDataProtocol> {
     private lazy var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false

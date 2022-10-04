@@ -8,17 +8,19 @@
 import Foundation
 
 protocol ShoppingListCoreDataProtocol {
+    var coreDataManager: CoreDataManager { get set }
     func saveToCoreData(cartList: Array<Product>)
     func updateEntity(shoppingItem: Product)
+    func returnItemsFromCoreData() -> ProductResponse
+    func deleteItems()
 }
 
-class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
-
-    private var coreDataManager: CoreDataManager!
+final class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
+    var coreDataManager: CoreDataManager
     private var listEntities = Array<ShoppingListEntity>()
 
-    init(coreDataManager: CoreDataManager) {
-        self.coreDataManager = coreDataManager
+    init() {
+        self.coreDataManager = CoreDataManager.shared
     }
 
 
@@ -39,17 +41,17 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
         fetchCartList()
         if checkCartListProductExist(product: shoppingItem) {
             
-            if let ob = coreDataManager.fetchWithPredicate(ShoppingListEntity.self, predicateKey: "productImage", predicateValue: shoppingItem.productImage) {
-                ob.productName = shoppingItem.productName
-                ob.productImage = shoppingItem.productImage
-                ob.productPrice = shoppingItem.productPrice
-                ob.productDescription = shoppingItem.productDescription
+            if let object = coreDataManager.fetchWithPredicate(ShoppingListEntity.self, predicateKey: "productImage", predicateValue: shoppingItem.productImage) {
+                object.productName = shoppingItem.productName
+                object.productImage = shoppingItem.productImage
+                object.productPrice = shoppingItem.productPrice
+                object.productDescription = shoppingItem.productDescription
 
                 if let productId = shoppingItem.productId {
-                    ob.productId = productId
+                    object.productId = productId
                 }
                 if let productCount = shoppingItem.productCount {
-                    ob.productCount = productCount
+                    object.productCount = productCount
                 }
             }
             coreDataManager.saveContext()
@@ -60,7 +62,6 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
     func saveToCoreData(cartList: Array<Product>) {
 
         fetchCartList()
-
         cartList.forEach { (product) in
 
             if !checkCartListProductExist(product: product) {
@@ -105,6 +106,6 @@ class ShoppingListCoreDataManager: ShoppingListCoreDataProtocol {
     }
 
     deinit {
-        print("DEINIT CartOperationsCoreDataManager")
+        print("DEINIT ShoppingListCoreDataManager")
     }
 }

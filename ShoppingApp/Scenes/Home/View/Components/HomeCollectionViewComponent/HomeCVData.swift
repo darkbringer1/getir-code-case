@@ -7,4 +7,4 @@
 
 import Foundation
 
-class HomeCVData {}
+final class HomeCVData {}

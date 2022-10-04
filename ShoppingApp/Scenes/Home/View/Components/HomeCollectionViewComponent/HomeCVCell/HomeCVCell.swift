@@ -7,8 +7,7 @@
 
 import UIKit
 
-class HomeCVCell: BaseCollectionViewCell {
-
+final class HomeCVCell: BaseCollectionViewCell {
     private lazy var displayerView: HomeCellDisplayerView = {
         let temp = HomeCellDisplayerView()
         temp.translatesAutoresizingMaskIntoConstraints = false

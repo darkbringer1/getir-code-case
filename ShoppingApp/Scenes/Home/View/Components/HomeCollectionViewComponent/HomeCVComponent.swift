@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-class HomeCVComponent: GenericBaseView<HomeCVData> {
-    weak var dataProvider: DataProviderProtocol?
+final class HomeCVComponent: GenericBaseView<HomeCVData> {
+    weak var dataProvider: HomeDataProviderProtocol?
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

@@ -6,12 +6,9 @@
 //
 
 import UIKit
-protocol BasketCVDataProvider {
-    func didSelect(product: Product)
-}
 
-class BasketCollectionViewComponent: GenericBaseView<BasketCollectionViewData> {
-    var dataProvider: BasketCVDataProvider?
+final class BasketCollectionViewComponent: GenericBaseView<BasketCollectionViewData> {
+    var dataProvider: BasketDataProviderProtocol?
 
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class BasketCellDisplayerData{
+final class BasketCellDisplayerData{
     private(set) var product: Product
 
     init(product: Product) {

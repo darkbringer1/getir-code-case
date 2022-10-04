@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductDetailView: GenericBaseView<ProductDetailViewData> {
+final class ProductDetailView: GenericBaseView<ProductDetailViewData> {
     private lazy var collectionView: UICollectionView = {
         let layout = ProductHeaderFlowLayout()
         layout.sectionInset = .init(top: 16, left: 16, bottom: 16, right: 16)

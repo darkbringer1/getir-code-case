@@ -10,7 +10,7 @@ import NetworkLayer
 
 typealias HomeViewStateBlock = (HomeViewState) -> Void
 
-protocol HomeViewModelProtocol: DataProviderProtocol {
+protocol HomeViewModelProtocol: HomeDataProviderProtocol {
     var coordinator: HomeViewCoordinatorProtocol? { get }
     func getData()
     func subscribeHomeViewState(with completion: @escaping HomeViewStateBlock)
@@ -18,7 +18,7 @@ protocol HomeViewModelProtocol: DataProviderProtocol {
     func navigateToBasket()
 }
 
-class HomeViewModel: HomeViewModelProtocol {
+final class HomeViewModel: HomeViewModelProtocol {
     var coordinator: HomeViewCoordinatorProtocol?
     var dataFormatter: HomeDataFormatterProtocol
 
@@ -71,7 +71,7 @@ class HomeViewModel: HomeViewModelProtocol {
         switch result {
         case .failure(let error):
             print("Error data listener: \(error)")
-            self?.homeViewState?(.error)
+            self?.homeViewState?(.error(Alert.buildDefaultAlert(message: "", doneTitle: "", action: self?.retryAction(), cancelAction: nil)))
             self?.dataResponseHandler(from: self?.dataFormatter.getItemsFromDisk())
         case .success(let response):
             print("data: \(response)")
@@ -80,9 +80,13 @@ class HomeViewModel: HomeViewModelProtocol {
         }
     }
 
+    private lazy var retryAction: () -> Void = {
+        self.getData()
+    }
+
     private func dataResponseHandler(from response: ProductResponse?) {
         guard let response = response else {
-            homeViewState?(.error)
+            homeViewState?(.error(Alert.buildDefaultAlert(message: "", doneTitle: "", action: nil, cancelAction: nil)))
             return
         }
         dataFormatter.setData(with: response)
@@ -91,7 +95,7 @@ class HomeViewModel: HomeViewModelProtocol {
 }
 
 // MARK: - CV Data Provider
-extension HomeViewModel: DataProviderProtocol {
+extension HomeViewModel: HomeDataProviderProtocol {
     func askNumberOfItem(in section: Int) -> Int {
         dataFormatter.getNumberOfItems(in: section) ?? 0
     }
@@ -102,12 +106,19 @@ extension HomeViewModel: DataProviderProtocol {
 
     func selectedItem(at index: Int) {
         guard let product = dataFormatter.getItem(at: index) else { return }
-        coordinator?.navigateToDetailView(with: product)
+        coordinator?.navigateToDetailView(with: product) { state in
+            switch state {
+            case true:
+                self.homeViewState?(.loading)
+            case false:
+                self.homeViewState?(.done)
+            }
+        }
     }
 }
 
 enum HomeViewState {
     case loading
     case done
-    case error
+    case error(Alert)
 }

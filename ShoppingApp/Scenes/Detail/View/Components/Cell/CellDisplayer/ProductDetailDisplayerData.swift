@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ProductDetailDisplayerData {
+final class ProductDetailDisplayerData {
     private(set) var title: String
     private(set) var descriptionText: String
 

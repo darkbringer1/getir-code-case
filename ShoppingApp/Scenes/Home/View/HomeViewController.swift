@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     var viewModel: HomeViewModelProtocol!
     private var homeCVComponent: HomeCVComponent!

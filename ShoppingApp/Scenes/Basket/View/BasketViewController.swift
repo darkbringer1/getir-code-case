@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BasketViewController: UIViewController {
+final class BasketViewController: UIViewController {
     var viewModel: BasketViewModelProtocol!
     private var mainComponent: BasketCollectionViewComponent!
 
@@ -19,14 +19,19 @@ class BasketViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addMainComponent()
+        subscribeToViewModelListeners()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mainComponent.set(data: viewModel.getCollectionViewData())
     }
 
     private func addMainComponent() {
         mainComponent = BasketCollectionViewComponent()
         mainComponent.translatesAutoresizingMaskIntoConstraints = false
         mainComponent.dataProvider = viewModel
-        mainComponent.set(data: viewModel.getCollectionViewData())
-        
+
         view.addSubview(mainComponent)
 
         NSLayoutConstraint.activate([
@@ -35,6 +40,18 @@ class BasketViewController: UIViewController {
             mainComponent.topAnchor.constraint(equalTo: view.topAnchor),
             mainComponent.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        mainComponent.reloadCollectionView()
+    }
+
+    private func subscribeToViewModelListeners() {
+        viewModel.subscribeToViewStateListener { [weak self] state in
+            switch state {
+            case .loading:
+                self?.mainComponent.set(data: self?.viewModel.getCollectionViewData())
+            case .done:
+                self?.mainComponent.reloadCollectionView()
+            case .error:
+                break
+            }
+        }
     }
 }

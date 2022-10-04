@@ -7,7 +7,7 @@
 
 import Foundation
 
-class BasketCollectionViewData {
+final class BasketCollectionViewData {
     private(set) var displayerData: [BasketCellDisplayerData] = [BasketCellDisplayerData]()
     
     func setTitleViewData(by value: [BasketCellDisplayerData]) -> Self {

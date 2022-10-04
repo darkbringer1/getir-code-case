@@ -15,13 +15,12 @@ protocol HomeDataFormatterProtocol {
     func getItemsFromDisk() -> ProductResponse
 }
 
-class HomeDataFormatter: HomeDataFormatterProtocol {
+final class HomeDataFormatter: HomeDataFormatterProtocol {
     private var data: ProductResponse?
-    private var coreDataManager = CoreDataManager.shared
-    private var shoppingListDataManager: ShoppingListCoreDataManager
+    private var shoppingListDataManager: ShoppingListCoreDataProtocol
 
-    init() {
-        self.shoppingListDataManager = ShoppingListCoreDataManager(coreDataManager: coreDataManager)
+    init(shoppingListCoreDataManager: ShoppingListCoreDataProtocol) {
+        self.shoppingListDataManager = shoppingListCoreDataManager
     }
 
     func setData(with response: ProductResponse?) {

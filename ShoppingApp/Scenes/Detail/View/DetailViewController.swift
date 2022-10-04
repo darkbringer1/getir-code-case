@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController, ErrorHandlingProtocol {
     var viewModel: DetailViewModelProtocol!
     private var detailComponent: ProductDetailView!
 
@@ -36,10 +36,18 @@ class DetailViewController: UIViewController {
     }
 
     private func subscribeViewModelListeners() {
-        viewModel.subscribeDetailDataState { product in
+        viewModel.addToBasketListener { state in
+            switch state {
+            case true:
+                self.showAlert(with: Alert(title: "Urun sepete eklendi", message: "", actions: [AlertAction(title: "Tamam", style: .default, action: .none)], style: .alert))
+            case false:
+                break
+            }
+        }
+        viewModel.detailDataState { product in
             self.detailComponent.set(data: self.viewModel.formatData())
         }
-        viewModel.subscribeDetailDataChangeListener { state in
+        viewModel.detailDataChangeListener { state in
             switch state {
             case .dataChanged:
                 self.detailComponent.set(data: self.viewModel.formatData())

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ProductDetailViewData {
+final class ProductDetailViewData {
     private(set) var headerViewData: ProductHeaderData?
     private(set) var displayerData: [ProductDetailDisplayerData] = [ProductDetailDisplayerData]()
     private(set) var footerViewData: ProductFooterData?

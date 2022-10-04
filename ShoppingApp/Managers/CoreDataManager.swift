@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class CoreDataManager {
+final class CoreDataManager {
 
     public static let shared = CoreDataManager()
 

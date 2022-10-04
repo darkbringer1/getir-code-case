@@ -6,22 +6,31 @@
 //
 
 import Foundation
+typealias BasketViewStateBlock = (BasketViewState) -> Void
 
-protocol BasketViewModelProtocol: BasketCVDataProvider {
+protocol BasketViewModelProtocol: BasketDataProviderProtocol {
     func getCollectionViewData() -> BasketCollectionViewData
+    func subscribeToViewStateListener(with completion: @escaping BasketViewStateBlock)
 }
 
-class BasketViewModel: BasketViewModelProtocol {
-    private var coreDataManager = CoreDataManager.shared
-    private var shoppingListDataManager: ShoppingListCoreDataManager
+final class BasketViewModel: BasketViewModelProtocol {
+    private var shoppingListDataManager: ShoppingListCoreDataProtocol
     var coordinator: HomeViewCoordinatorProtocol?
+    private var basketViewState: BasketViewStateBlock?
 
     init() {
-        self.shoppingListDataManager = ShoppingListCoreDataManager(coreDataManager: coreDataManager)
+        self.shoppingListDataManager = ShoppingListCoreDataManager()
+        basketViewState?(.loading)
+    }
+
+    func subscribeToViewStateListener(with completion: @escaping BasketViewStateBlock) {
+        basketViewState = completion
     }
 
     func getCollectionViewData() -> BasketCollectionViewData {
-        return BasketCollectionViewData().setTitleViewData(by: getBasketCellArray())
+        let data = BasketCollectionViewData().setTitleViewData(by: getBasketCellArray())
+        basketViewState?(.done)
+        return data
     }
 
     private func getBasketCellArray() -> [BasketCellDisplayerData] {
@@ -31,8 +40,21 @@ class BasketViewModel: BasketViewModelProtocol {
     }
 }
 
-extension BasketViewModel: BasketCVDataProvider {
+extension BasketViewModel: BasketDataProviderProtocol {
     func didSelect(product: Product) {
-        coordinator?.navigateToDetailView(with: product)
+        coordinator?.navigateToDetailView(with: product) { [weak self] state in
+            switch state {
+            case true:
+                self?.basketViewState?(.loading)
+            case false:
+                self?.basketViewState?(.done)
+            }
+        }
     }
+}
+
+enum BasketViewState {
+    case loading
+    case done
+    case error(Alert)
 }
